@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Author: Ashwin Ravindra
+#This script was written with the help of chatGPT prompt
+
 # Validate whether the script is run with 2 arguments
 if [ "$#" -ne 2 ]; 
 then
