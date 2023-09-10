@@ -1,0 +1,5 @@
+#writer build with CROSS_COMPILE=aarch64-none-linux-gnu- flag
+writer: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, for GNU/Linux 3.7.0, with debug_info, not stripped
+
+#writer build without CROSS_COMPILE flag
+writer: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=df07302d9ac53e1403bc5237926c9fd2d3fa4ffc, for GNU/Linux 3.2.0, not stripped
