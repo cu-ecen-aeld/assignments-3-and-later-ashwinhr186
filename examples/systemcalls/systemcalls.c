@@ -1,41 +1,47 @@
 #include "systemcalls.h"
+#include <syslog.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
-/**
- * @param cmd the command to execute with system()
- * @return true if the command in @param cmd was executed
- *   successfully using the system() call, false if an error occurred,
- *   either in invocation of the system() call, or if a non-zero return
- *   value was returned by the command issued in @param cmd.
-*/
 bool do_system(const char *cmd)
 {
+    openlog("writer app", LOG_PID, LOG_USER);
+    int ret;
+    if(cmd==NULL) {
+        if(system(cmd)==0) {
+            syslog(LOG_ERR, "Shell not available !\n");
+            //printf("Shell not available !\n");
+        }
+        else {
+            syslog(LOG_INFO, "No command available to execute, please provide a command\n");
+            //printf("No command available to execute, please provide a command\n");
+        }
+        closelog();
+        return false;
 
-/*
- * TODO  add your code here
- *  Call the system() function with the command set in the cmd
- *   and return a boolean true if the system() call completed with success
- *   or false() if it returned a failure
-*/
-
-    return true;
+    }
+    else {
+        ret=system(cmd);
+        if(ret==0) {
+            syslog(LOG_INFO, "Command %s successfully executed\n", cmd);
+            closelog();
+            return true;
+        }        
+        else {
+            syslog(LOG_ERR, "Error: %s\n", strerror(errno));
+            closelog();
+            return false;
+        }
+    }
 }
-
-/**
-* @param count -The numbers of variables passed to the function. The variables are command to execute.
-*   followed by arguments to pass to the command
-*   Since exec() does not perform path expansion, the command to execute needs
-*   to be an absolute path.
-* @param ... - A list of 1 or more arguments after the @param count argument.
-*   The first is always the full path to the command to execute with execv()
-*   The remaining arguments are a list of arguments to pass to the command in execv()
-* @return true if the command @param ... with arguments @param arguments were executed successfully
-*   using the execv() call, false if an error occurred, either in invocation of the
-*   fork, waitpid, or execv() command, or if a non-zero return value was returned
-*   by the command issued in @param arguments with the specified arguments.
-*/
 
 bool do_exec(int count, ...)
 {
+    int status;
     va_list args;
     va_start(args, count);
     char * command[count+1];
@@ -45,32 +51,43 @@ bool do_exec(int count, ...)
         command[i] = va_arg(args, char *);
     }
     command[count] = NULL;
-    // this line is to avoid a compile warning before your implementation is complete
-    // and may be removed
-    command[count] = command[count];
+    openlog("writer app", LOG_PID, LOG_USER);
+    pid_t childPid = fork();
+    if(childPid == -1) {
+        syslog(LOG_ERR, "Error in do_exec function: %s\n", strerror(errno));
+        va_end(args);
+        closelog();
+        //return false;
+        exit(EXIT_FAILURE);
+    }
 
-/*
- * TODO:
- *   Execute a system command by calling fork, execv(),
- *   and wait instead of system (see LSP page 161).
- *   Use the command[0] as the full path to the command to execute
- *   (first argument to execv), and use the remaining arguments
- *   as second argument to the execv() command.
- *
-*/
-
-    va_end(args);
-
+    if(childPid==0) {
+        syslog(LOG_INFO, "Child process created successfully !\n");
+        if(execv(command[0], command)==-1) {
+            syslog(LOG_ERR, "Error in do_exec function: %s\n", strerror(errno));
+            va_end(args);
+            closelog();
+            exit(EXIT_FAILURE);
+        }
+    }
+    else {
+        wait(&status);
+        if(WIFEXITED(status)) {
+            syslog(LOG_INFO, "Child process exited successfully !\n");
+            va_end(args);
+            closelog();
+            return (WEXITSTATUS(status)==0);
+        }
+        va_end(args);
+        closelog();
+        return false;
+    }
     return true;
 }
 
-/**
-* @param outputfile - The full path to the file to write with command output.
-*   This file will be closed at completion of the function call.
-* All other parameters, see do_exec above
-*/
 bool do_exec_redirect(const char *outputfile, int count, ...)
 {
+    int status;
     va_list args;
     va_start(args, count);
     char * command[count+1];
@@ -80,20 +97,43 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
         command[i] = va_arg(args, char *);
     }
     command[count] = NULL;
-    // this line is to avoid a compile warning before your implementation is complete
-    // and may be removed
-    command[count] = command[count];
+    openlog("writer app", LOG_PID, LOG_USER);
 
 
-/*
- * TODO
- *   Call execv, but first using https://stackoverflow.com/a/13784315/1446624 as a refernce,
- *   redirect standard out to a file specified by outputfile.
- *   The rest of the behaviour is same as do_exec()
- *
-*/
+    syslog(LOG_INFO, "File %s opened successfully !\n", outputfile);
+    pid_t childPid = fork();
+    if(childPid == -1) {
+        syslog(LOG_ERR, "Error in do_exec function: %s\n", strerror(errno));
+        va_end(args);
+        closelog();
+        return false;
+    }
+    else if(childPid==0) {
+        syslog(LOG_INFO, "Child process created successfully !\n");
+        FILE* file = freopen(outputfile, "w", stdout); //redirect stdout to outputfile;
+        if(file==NULL) {
+            syslog(LOG_ERR, "Error in do_exec_redirect function: %s\n", strerror(errno));
+            va_end(args);
+            closelog();
+            exit(EXIT_FAILURE);
+        }
+        const char* filepath = command[0];
+        execv(filepath, command);
+        syslog(LOG_ERR, "Error in do_exec_redirect function: %s\n", strerror(errno));
+        va_end(args);
+        closelog();
+        exit(EXIT_FAILURE);
+    }
 
+    wait(&status);
+
+    if(WIFEXITED(status)) {
+        syslog(LOG_INFO, "Child process exited successfully !\n");
+        va_end(args);
+        closelog();
+        return (WEXITSTATUS(status)==0);
+    }
     va_end(args);
-
-    return true;
+    closelog();
+    return false;
 }
