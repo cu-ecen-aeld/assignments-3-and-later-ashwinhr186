@@ -82,7 +82,7 @@ else
 fi
 
 # TODO: Make and install busybox
-#make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE}
+make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE}
 make CONFIG_PREFIX=${OUTDIR}/rootfs ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} install
 
 echo "Library dependencies"
@@ -91,10 +91,10 @@ ${CROSS_COMPILE}readelf -a ${OUTDIR}/rootfs/bin/busybox | grep "Shared library"
 
 #Add library dependencies to rootfs
 ROOT=$(${CROSS_COMPILE}gcc --print-sysroot)
-cp ${ROOT}/lib/ld-linux-aarch64.so.1 ${OUTDIR}/rootfs/lib
-cp ${ROOT}/lib64/libm.so.6 ${OUTDIR}/rootfs/lib64
-cp ${ROOT}/lib64/libresolv.so.2 ${OUTDIR}/rootfs/lib64
-cp ${ROOT}/lib64/libc.so.6 ${OUTDIR}/rootfs/lib64
+cp ${ROOT}/lib/ld-linux-aarch64.so.* ${OUTDIR}/rootfs/lib
+cp ${ROOT}/lib64/libm.so.* ${OUTDIR}/rootfs/lib64
+cp ${ROOT}/lib64/libresolv.so.* ${OUTDIR}/rootfs/lib64
+cp ${ROOT}/lib64/libc.so.* ${OUTDIR}/rootfs/lib64
 
 #cp -a $SYSROOT/lib/ld-linux-aarch64.so.1 lib
 #cp -a $SYSROOT/lib64/ld-2.31.so lib64
