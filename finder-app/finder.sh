@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #Author: Ashwin Ravindra
 #This script was written with the help of chatGPT 
