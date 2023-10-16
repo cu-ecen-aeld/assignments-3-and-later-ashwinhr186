@@ -103,7 +103,8 @@ void* thread_socket(void* thread_param) {
     close(fd);
     syslog(LOG_INFO, "Closed connection from %s\n", s);
     thread_func_param->thread_complete_success = true;
-    pthread_exit(NULL);
+    return thread_func_param;
+    //pthread_exit(NULL);
 }
 
 /************************************************************************************************
