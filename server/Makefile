@@ -1,7 +1,8 @@
+LDFLAGS = -lpthread -pthread
 CC = ${CROSS_COMPILE}gcc -Wall -Werror -g
 
 all: aesdsocket
-	${CC} -o aesdsocket aesdsocket.c
+	${CC} aesdsocket.c -o aesdsocket ${LDFLAGS}
 
 clean:
 	rm -f aesdsocket

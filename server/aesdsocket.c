@@ -11,13 +11,46 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <pthread.h>
+#include <stdbool.h>
+#include "includes/queue.h"
+#include <time.h>
 
 #define PORT "9000"
 #define BACKLOG 10
-#define BUF_LEN 1000000
+#define BUF_LEN 1024
+#define TIMESTAMP_STRING_LENGTH 100
 
 char *pathname = "/var/tmp/aesdsocketdata";
 int sockfd;
+int fd;
+pthread_mutex_t mutex;
+
+typedef struct {
+    pthread_t thread_id;
+    pthread_mutex_t mutex;
+    int interval_in_s;
+}timestamp_t;
+
+timestamp_t timestamp;
+
+/*structure for thread*/
+typedef struct thread_data {
+    pthread_t thread_id;
+    int newsockfd;
+    struct sockaddr_storage clientaddr;
+    pthread_mutex_t mutex;
+    bool thread_complete_success;
+}thread_data_t;
+
+/*structure for slist nodes*/
+typedef struct slist_data_s {
+    thread_data_t thread_params;
+    SLIST_ENTRY(slist_data_s) entries;
+} slist_data_t;
+
+slist_data_t *datap = NULL;
+SLIST_HEAD(slisthead, slist_data_s) head;
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa) {
@@ -27,17 +60,104 @@ void *get_in_addr(struct sockaddr *sa) {
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
+/*thread_socket function*/
+void* thread_socket(void* thread_param) {
+
+    char buf[BUF_LEN];
+    char transmit_buffer[BUF_LEN];
+    int fd = open(pathname, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
+    thread_data_t *thread_func_param = (thread_data_t *)thread_param;
+    struct sockaddr_storage clientaddr = thread_func_param->clientaddr;
+    char s[INET6_ADDRSTRLEN];
+    inet_ntop(clientaddr.ss_family, get_in_addr((struct sockaddr *)&clientaddr), s, sizeof s);
+    syslog(LOG_USER | LOG_INFO, "Accepted connection from %s\n", s);
+
+    //printf("newsockfd inside thread_socket: %d\n", thread_func_param->newsockfd);
+    while(1) {
+        memset(buf, '\0', BUF_LEN);
+        size_t recv_bytes = recv(thread_func_param->newsockfd, buf, BUF_LEN, 0);
+        if(recv_bytes == -1) {
+            perror("recv");
+            exit(EXIT_FAILURE);
+        }
+        pthread_mutex_lock(&thread_func_param->mutex);
+        //printf("inside lock\n");
+        write(fd, buf, recv_bytes);
+        pthread_mutex_unlock(&thread_func_param->mutex);
+        //printf("unlock\n");
+        if(buf[recv_bytes-1] == '\n') {
+            break;
+        }
+    }
+    lseek(fd, 0, SEEK_SET);
+    memset(transmit_buffer, '\0', BUF_LEN);
+    int read_bytes = read(fd, transmit_buffer, BUF_LEN);
+    if(read_bytes == -1) {
+        perror("read");
+        exit(EXIT_FAILURE);
+    }
+    send(thread_func_param->newsockfd, transmit_buffer, read_bytes, 0);
+    close(thread_func_param->newsockfd);
+    close(fd);
+    syslog(LOG_INFO, "Closed connection from %s\n", s);
+    thread_func_param->thread_complete_success = true;
+    //printf("here\n");
+    pthread_exit(NULL);
+}
+
+/*thread_timestamp function*/
+void* thread_timestamp(void* thread_param) {
+    timestamp_t *thread_func_param = (timestamp_t *)thread_param;
+
+    time_t curr_time;
+    struct tm *local_time_info;
+    char formatted_timestamp[TIMESTAMP_STRING_LENGTH];
+    struct timespec time_spec;
+    syslog(LOG_INFO, "Time logging thread activated.");
+    while(1) {
+        clock_gettime(CLOCK_MONOTONIC, &time_spec);
+        time_spec.tv_sec += thread_func_param->interval_in_s;
+        clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &time_spec, NULL);
+
+        /*Get and format current time*/
+        time(&curr_time);
+        local_time_info = localtime(&curr_time);
+        int length_of_timestamp = strftime(formatted_timestamp, sizeof(formatted_timestamp), "timestamp: %Y, %b %d, %H:%M:%S\n", local_time_info);
+
+        pthread_mutex_lock(&thread_func_param->mutex);
+        int bytes_written = write(fd, formatted_timestamp, length_of_timestamp);
+        if(bytes_written == -1) {
+            perror("write");
+        }
+        pthread_mutex_unlock(&thread_func_param->mutex);
+    }
+    pthread_exit(NULL);
+}
+
 static void signal_handler(int signo) {
     syslog(LOG_INFO, "Caught Signal, exiting\n");
     close(sockfd);
+    close(fd);
     remove(pathname);
     closelog();
+    while(!SLIST_FIRST(&head)) {
+        datap = SLIST_FIRST(&head);
+        SLIST_REMOVE_HEAD(&head, entries);
+        pthread_join(datap->thread_params.thread_id, NULL);
+        pthread_mutex_destroy(&datap->thread_params.mutex);
+        //free(datap->thread_params);
+        free(datap);
+    }
+    //pthread_join(timestamp.thread_id, NULL);
+    pthread_mutex_destroy(&mutex);
     exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char *argv[]) {
     /*Open syslog connection for logging*/
     openlog("aesdsocket", LOG_PID, LOG_USER);
+
+    pthread_mutex_init(&mutex, NULL);
 
     /*Check whether -d argument is present*/
     if(argc == 2) {
@@ -64,6 +184,13 @@ int main(int argc, char *argv[]) {
             close(STDERR_FILENO);
         }
     }
+    remove(pathname);
+
+    fd = open(pathname, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
+    if(fd == -1) {
+        perror("open");
+        exit(EXIT_FAILURE);
+    }
 
     /*Register signal_handler as our signal handler for SIGINT*/
     if (signal (SIGINT, signal_handler) == SIG_ERR) {
@@ -82,13 +209,12 @@ int main(int argc, char *argv[]) {
     struct sockaddr_storage clientaddr;
     struct addrinfo *servinfo, *p;
     socklen_t clientsize = sizeof(struct sockaddr_storage);
-    char s[INET6_ADDRSTRLEN];
     int status;
     int newsockfd;
     int yes = 1;
-    char buf[BUF_LEN];
-    char transmit_buffer[BUF_LEN];
-    size_t buflen = 0; 
+
+    /*Define head for slist*/
+    SLIST_INIT(&head);
 
     /*Fill up hints structure for getaddrinfo*/
     memset(&hints, 0, sizeof(hints));
@@ -129,51 +255,55 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    timestamp.interval_in_s = 10;
+    timestamp.mutex = mutex;
+    pthread_create(&timestamp.thread_id, NULL, thread_timestamp, &timestamp);
+
     if(listen(sockfd, BACKLOG) == -1) {
         perror("listen");
         exit(EXIT_FAILURE);
     }
 
     while(1) {
-        memset(transmit_buffer, '\0', BUF_LEN);
+        //memset(transmit_buffer, '\0', BUF_LEN);
         newsockfd = accept(sockfd, (struct sockaddr*)&clientaddr, &clientsize);
         if(newsockfd == -1) {
             perror("accept");
             continue;
         }
 
-        inet_ntop(clientaddr.ss_family, get_in_addr((struct sockaddr *)&clientaddr), s, sizeof s);
-        syslog(LOG_USER | LOG_INFO, "Accepted connection from %s\n", s);
-        int fd = open(pathname, O_RDWR | O_APPEND | O_CREAT, 0666);
-        if(fd == -1) {
-            perror("open");
-            exit(EXIT_FAILURE);
-        }
-        while(1) {
-            memset(buf, '\0', BUF_LEN);
-            buflen = recv(newsockfd, buf, BUF_LEN, 0);
-            //printf("buf received: %s\n", buf);
-            write(fd, buf, buflen);
-            if(buf[buflen-1] == '\n')
-                break;
-        }
-        //off_t filesize = lseek(fd, 0, SEEK_END);
-        lseek(fd, 0, SEEK_SET);
-        memset(transmit_buffer, '\0', BUF_LEN);
-        if(transmit_buffer == NULL) {
+        /*Add thread_params to the slist*/
+        datap = (slist_data_t *)malloc(sizeof(slist_data_t));
+        if(datap == NULL) {
             perror("malloc");
             exit(EXIT_FAILURE);
         }
-        int read_bytes = read(fd, transmit_buffer, BUF_LEN);
-        if(read_bytes == -1) {
-            perror("read");
-            exit(EXIT_FAILURE);
+        datap->thread_params.newsockfd = newsockfd;
+        datap->thread_params.clientaddr = clientaddr;
+        datap->thread_params.thread_complete_success = false;
+        datap->thread_params.mutex = mutex;
+
+        //printf("datap->thread_params->newsockfd: %d\n", datap->thread_params->newsockfd);
+
+        pthread_create(&(datap->thread_params.thread_id), NULL, thread_socket, &datap->thread_params);
+        SLIST_INSERT_HEAD(&head, datap, entries);
+
+        //printf("thread added to slist\n");
+
+        /*Check if any thread has completed*/
+        SLIST_FOREACH(datap, &head, entries) {
+            if(datap->thread_params.thread_complete_success == true) {
+                int ret = pthread_join(datap->thread_params.thread_id, NULL);
+                if(ret != 0) {
+                    perror("pthread_join");
+                    exit(EXIT_FAILURE);
+                }
+                SLIST_REMOVE(&head, datap, slist_data_s, entries);
+                //pthread_mutex_destroy(&datap->thread_params->mutex);
+                //free(datap->thread_params);
+                free(datap);           
+            }
         }
-        //printf("transmit_buffer: %s\n", transmit_buffer);
-        send(newsockfd, transmit_buffer, read_bytes, 0);
-        close(newsockfd);
-        close(fd);
-        syslog(LOG_INFO, "Closed connection from %s\n", s);
     }    
 }
 
