@@ -26,6 +26,7 @@ int sockfd;
 int fd;
 pthread_mutex_t mutex;
 
+/*Structure for timer thread*/
 typedef struct {
     pthread_t thread_id;
     pthread_mutex_t mutex;
@@ -49,6 +50,7 @@ typedef struct slist_data_s {
     SLIST_ENTRY(slist_data_s) entries;
 } slist_data_t;
 
+/*Initialize slist head*/
 slist_data_t *datap = NULL;
 SLIST_HEAD(slisthead, slist_data_s) head;
 
@@ -60,7 +62,10 @@ void *get_in_addr(struct sockaddr *sa) {
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-/*thread_socket function*/
+/************************************************************************************************
+                        Thread function to handle socket communication
+************************************************************************************************/
+
 void* thread_socket(void* thread_param) {
 
     char buf[BUF_LEN];
@@ -72,7 +77,6 @@ void* thread_socket(void* thread_param) {
     inet_ntop(clientaddr.ss_family, get_in_addr((struct sockaddr *)&clientaddr), s, sizeof s);
     syslog(LOG_USER | LOG_INFO, "Accepted connection from %s\n", s);
 
-    //printf("newsockfd inside thread_socket: %d\n", thread_func_param->newsockfd);
     while(1) {
         memset(buf, '\0', BUF_LEN);
         size_t recv_bytes = recv(thread_func_param->newsockfd, buf, BUF_LEN, 0);
@@ -81,10 +85,8 @@ void* thread_socket(void* thread_param) {
             exit(EXIT_FAILURE);
         }
         pthread_mutex_lock(&thread_func_param->mutex);
-        //printf("inside lock\n");
         write(fd, buf, recv_bytes);
         pthread_mutex_unlock(&thread_func_param->mutex);
-        //printf("unlock\n");
         if(buf[recv_bytes-1] == '\n') {
             break;
         }
@@ -101,16 +103,21 @@ void* thread_socket(void* thread_param) {
     close(fd);
     syslog(LOG_INFO, "Closed connection from %s\n", s);
     thread_func_param->thread_complete_success = true;
-    //printf("here\n");
     pthread_exit(NULL);
 }
 
-/*thread_timestamp function*/
+/************************************************************************************************
+                        Thread function to log timestamp
+************************************************************************************************/
+
+/*This part of the code was referred from Suraj Ajjampur's github repository
+Credits to: https://github.com/cu-ecen-aeld/assignments-3-and-later-Suraj-Ajjampur/blob/master/server/aesdsocket.c*/
+
 void* thread_timestamp(void* thread_param) {
     timestamp_t *thread_func_param = (timestamp_t *)thread_param;
 
-    time_t curr_time;
-    struct tm *local_time_info;
+    time_t current_time;
+    struct tm *local_time;
     char formatted_timestamp[TIMESTAMP_STRING_LENGTH];
     struct timespec time_spec;
     syslog(LOG_INFO, "Time logging thread activated.");
@@ -119,10 +126,11 @@ void* thread_timestamp(void* thread_param) {
         time_spec.tv_sec += thread_func_param->interval_in_s;
         clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &time_spec, NULL);
 
-        /*Get and format current time*/
-        time(&curr_time);
-        local_time_info = localtime(&curr_time);
-        int length_of_timestamp = strftime(formatted_timestamp, sizeof(formatted_timestamp), "timestamp: %Y, %b %d, %H:%M:%S\n", local_time_info);
+        time(&current_time);
+        local_time = localtime(&current_time);
+        int length_of_timestamp = strftime(formatted_timestamp, sizeof(formatted_timestamp), "timestamp: %Y, %b %d, %H:%M:%S\n", local_time);
+
+        /*Get mutex lock and write to file*/
 
         pthread_mutex_lock(&thread_func_param->mutex);
         int bytes_written = write(fd, formatted_timestamp, length_of_timestamp);
@@ -130,9 +138,16 @@ void* thread_timestamp(void* thread_param) {
             perror("write");
         }
         pthread_mutex_unlock(&thread_func_param->mutex);
+
+        /*Unlock mutex*/
     }
     pthread_exit(NULL);
 }
+
+
+/************************************************************************************************
+                        Signal handler to handle SIGINT and SIGTERM
+************************************************************************************************/
 
 static void signal_handler(int signo) {
     syslog(LOG_INFO, "Caught Signal, exiting\n");
@@ -145,18 +160,23 @@ static void signal_handler(int signo) {
         SLIST_REMOVE_HEAD(&head, entries);
         pthread_join(datap->thread_params.thread_id, NULL);
         pthread_mutex_destroy(&datap->thread_params.mutex);
-        //free(datap->thread_params);
         free(datap);
     }
-    //pthread_join(timestamp.thread_id, NULL);
     pthread_mutex_destroy(&mutex);
     exit(EXIT_SUCCESS);
 }
 
+
+/************************************************************************************************
+                        Main function
+************************************************************************************************/
+
 int main(int argc, char *argv[]) {
+
     /*Open syslog connection for logging*/
     openlog("aesdsocket", LOG_PID, LOG_USER);
 
+    /*Initialize mutex*/
     pthread_mutex_init(&mutex, NULL);
 
     /*Check whether -d argument is present*/
@@ -248,6 +268,7 @@ int main(int argc, char *argv[]) {
         break;
     }
 
+    /*servinfo is no longer required*/
     freeaddrinfo(servinfo);
 
     if(p == NULL) {
@@ -265,7 +286,7 @@ int main(int argc, char *argv[]) {
     }
 
     while(1) {
-        //memset(transmit_buffer, '\0', BUF_LEN);
+        /*Accept incoming connections*/
         newsockfd = accept(sockfd, (struct sockaddr*)&clientaddr, &clientsize);
         if(newsockfd == -1) {
             perror("accept");
@@ -283,12 +304,8 @@ int main(int argc, char *argv[]) {
         datap->thread_params.thread_complete_success = false;
         datap->thread_params.mutex = mutex;
 
-        //printf("datap->thread_params->newsockfd: %d\n", datap->thread_params->newsockfd);
-
         pthread_create(&(datap->thread_params.thread_id), NULL, thread_socket, &datap->thread_params);
         SLIST_INSERT_HEAD(&head, datap, entries);
-
-        //printf("thread added to slist\n");
 
         /*Check if any thread has completed*/
         SLIST_FOREACH(datap, &head, entries) {
@@ -299,8 +316,6 @@ int main(int argc, char *argv[]) {
                     exit(EXIT_FAILURE);
                 }
                 SLIST_REMOVE(&head, datap, slist_data_s, entries);
-                //pthread_mutex_destroy(&datap->thread_params->mutex);
-                //free(datap->thread_params);
                 free(datap);           
             }
         }
