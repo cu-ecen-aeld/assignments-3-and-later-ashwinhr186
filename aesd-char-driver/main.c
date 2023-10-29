@@ -60,7 +60,8 @@ ssize_t aesd_read(struct file *filp, char __user *buf, size_t count,
     size_t* f_pos_offset = kmalloc(sizeof(size_t), GFP_KERNEL);
     struct aesd_buffer_entry* read_entry;
     mutex_lock(&aesd_device.write_lock); 
-    while((read_entry = aesd_circular_buffer_find_entry_offset_for_fpos(aesd_device.command_buffer, (size_t)*f_pos, f_pos_offset)) != NULL) {
+    if((read_entry = aesd_circular_buffer_find_entry_offset_for_fpos(aesd_device.command_buffer, (size_t)*f_pos, f_pos_offset)) != NULL) {
+        PDEBUG("f_pos_offset: %zu", *f_pos_offset);
         PDEBUG("buffer->out_offs: %d", aesd_device.command_buffer->out_offs);
         PDEBUG("string read: %s", read_entry->buffptr + *f_pos_offset);
         ssize_t bytes_read = read_entry->size - *f_pos_offset;
@@ -68,6 +69,7 @@ ssize_t aesd_read(struct file *filp, char __user *buf, size_t count,
             bytes_read = count;
         copy_to_user(buf, read_entry->buffptr + *f_pos_offset, bytes_read);
         *f_pos += bytes_read;
+        PDEBUG("f_pos: %lld", *f_pos);
         retval = bytes_read;
     }
     mutex_unlock(&aesd_device.write_lock);
