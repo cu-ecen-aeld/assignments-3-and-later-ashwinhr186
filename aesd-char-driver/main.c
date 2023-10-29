@@ -16,6 +16,7 @@
 #include <linux/printk.h>
 #include <linux/types.h>
 #include <linux/cdev.h>
+#include <linux/slab.h> // kmalloc
 #include <linux/fs.h> // file_operations
 #include "aesdchar.h"
 #include "aesd-circular-buffer.h"
@@ -56,10 +57,12 @@ ssize_t aesd_read(struct file *filp, char __user *buf, size_t count,
     /**
      * TODO: handle read
      */
-    size_t* f_pos_offset;
-    struct aesd_buffer_entry* read_entry; 
-    read_entry = aesd_circular_buffer_find_entry_offset_for_fpos(aesd_device.command_buffer, (size_t)*f_pos, f_pos_offset);
-    if(read_entry != NULL) {
+    size_t* f_pos_offset = kmalloc(sizeof(size_t), GFP_KERNEL);
+    struct aesd_buffer_entry* read_entry;
+    mutex_lock(&aesd_device.write_lock); 
+    while((read_entry = aesd_circular_buffer_find_entry_offset_for_fpos(aesd_device.command_buffer, (size_t)*f_pos, f_pos_offset)) != NULL) {
+        PDEBUG("buffer->out_offs: %d", aesd_device.command_buffer->out_offs);
+        PDEBUG("string read: %s", read_entry->buffptr + *f_pos_offset);
         ssize_t bytes_read = read_entry->size - *f_pos_offset;
         if(bytes_read > count)
             bytes_read = count;
@@ -67,6 +70,7 @@ ssize_t aesd_read(struct file *filp, char __user *buf, size_t count,
         *f_pos += bytes_read;
         retval = bytes_read;
     }
+    mutex_unlock(&aesd_device.write_lock);
     return retval;
 }
 
@@ -74,21 +78,26 @@ ssize_t aesd_write(struct file *filp, const char __user *buf, size_t count,
                 loff_t *f_pos)
 {
     ssize_t retval = -ENOMEM;
-    size_t final_count = 0;
     PDEBUG("write %zu bytes with offset %lld",count,*f_pos);
     /**
      * TODO: handle write
      */
-    struct aesd_buffer_entry new_entry;
-    if(new_entry.buffptr = kmalloc(count, GFP_KERNEL) == NULL) {
+    struct aesd_buffer_entry *new_entry = kmalloc(sizeof(struct aesd_buffer_entry), GFP_KERNEL);
+    if (new_entry == NULL) {
+        retval = -ENOMEM;
+    }
+    else if((new_entry->buffptr = kmalloc(count, GFP_KERNEL)) == NULL) {
         retval = -ENOMEM;
     }
     else {
-        new_entry.size = count;
-        copy_from_user(new_entry.buffptr, buf, count);
-        pthread_mutex_lock(&aesd_device.lock);
-        const char* overwritten_buffptr = aesd_circular_buffer_add_entry(aesd_device.command_buffer, &new_entry);
-        pthread_mutex_unlock(&aesd_device.lock);
+        new_entry->size = count;
+        copy_from_user(new_entry->buffptr, buf, count);
+        PDEBUG("buffer->in_offs before write: %d", aesd_device.command_buffer->in_offs);
+        PDEBUG("write string: %s", new_entry->buffptr);
+        mutex_lock(&aesd_device.write_lock);
+        const char* overwritten_buffptr = aesd_circular_buffer_add_entry(aesd_device.command_buffer, new_entry);
+        mutex_unlock(&aesd_device.write_lock);
+        PDEBUG("buffer->in_offs after write: %d", aesd_device.command_buffer->in_offs);
         if(overwritten_buffptr != NULL)
             kfree(overwritten_buffptr);
         retval = count;
@@ -136,7 +145,7 @@ int aesd_init_module(void)
      */
     struct aesd_circular_buffer* buffer = kmalloc(sizeof(struct aesd_circular_buffer), GFP_KERNEL);
     aesd_device.command_buffer = buffer;
-    mutex_init(&aesd_device.lock);
+    mutex_init(&aesd_device.write_lock);
     aesd_circular_buffer_init(aesd_device.command_buffer);
     aesd_device.command_buffer->in_offs = 0;
     aesd_device.command_buffer->out_offs = 0;
@@ -160,8 +169,10 @@ void aesd_cleanup_module(void)
     /**
      * TODO: cleanup AESD specific poritions here as necessary
      */
+
+    /*Use AESD_CIRCULAR_BUFFER_FOREACH perhaps to free each entry first*/
     kfree(aesd_device.command_buffer);
-    mutex_destroy(&aesd_device.lock);
+    mutex_destroy(&aesd_device.write_lock);
     unregister_chrdev_region(devno, 1);
 }
 

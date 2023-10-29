@@ -32,7 +32,7 @@ struct aesd_dev
      */
     struct cdev cdev;     /* Char device structure      */
     struct aesd_circular_buffer *command_buffer;
-    pthread_mutex_t write_lock;
+    struct mutex write_lock;
 
 };
 

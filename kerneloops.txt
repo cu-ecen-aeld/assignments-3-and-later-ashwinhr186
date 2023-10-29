@@ -1,0 +1,1231 @@
+[    0.000000] Linux version 5.15.0-87-generic (buildd@bos03-amd64-016) (gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #97~20.04.1-Ubuntu SMP Thu Oct 5 08:25:28 UTC 2023 (Ubuntu 5.15.0-87.97~20.04.1-generic 5.15.122)
+[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-87-generic root=UUID=3fee5075-e6a6-4bab-845d-5796d148f4ef ro quiet splash
+[    0.000000] KERNEL supported cpus:
+[    0.000000]   Intel GenuineIntel
+[    0.000000]   AMD AuthenticAMD
+[    0.000000]   Hygon HygonGenuine
+[    0.000000]   Centaur CentaurHauls
+[    0.000000]   zhaoxin   Shanghai  
+[    0.000000] BIOS-provided physical RAM map:
+[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable
+[    0.000000] BIOS-e820: [mem 0x000000000009fc00-0x000000000009ffff] reserved
+[    0.000000] BIOS-e820: [mem 0x00000000000f0000-0x00000000000fffff] reserved
+[    0.000000] BIOS-e820: [mem 0x0000000000100000-0x00000000dffeffff] usable
+[    0.000000] BIOS-e820: [mem 0x00000000dfff0000-0x00000000dfffffff] ACPI data
+[    0.000000] BIOS-e820: [mem 0x00000000fec00000-0x00000000fec00fff] reserved
+[    0.000000] BIOS-e820: [mem 0x00000000fee00000-0x00000000fee00fff] reserved
+[    0.000000] BIOS-e820: [mem 0x00000000fffc0000-0x00000000ffffffff] reserved
+[    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000021fffffff] usable
+[    0.000000] NX (Execute Disable) protection: active
+[    0.000000] SMBIOS 2.5 present.
+[    0.000000] DMI: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+[    0.000000] Hypervisor detected: KVM
+[    0.000000] kvm-clock: Using msrs 4b564d01 and 4b564d00
+[    0.000000] kvm-clock: cpu 0, msr 169a01001, primary cpu clock
+[    0.000002] kvm-clock: using sched offset of 12697550302 cycles
+[    0.000005] clocksource: kvm-clock: mask: 0xffffffffffffffff max_cycles: 0x1cd42e4dffb, max_idle_ns: 881590591483 ns
+[    0.000008] tsc: Detected 2592.008 MHz processor
+[    0.002365] e820: update [mem 0x00000000-0x00000fff] usable ==> reserved
+[    0.002368] e820: remove [mem 0x000a0000-0x000fffff] usable
+[    0.002373] last_pfn = 0x220000 max_arch_pfn = 0x400000000
+[    0.002442] Disabled
+[    0.002444] x86/PAT: MTRRs disabled, skipping PAT initialization too.
+[    0.002449] CPU MTRRs all blank - virtualized system.
+[    0.002450] x86/PAT: Configuration [0-7]: WB  WT  UC- UC  WB  WT  UC- UC  
+[    0.002453] last_pfn = 0xdfff0 max_arch_pfn = 0x400000000
+[    0.002504] found SMP MP-table at [mem 0x0009fff0-0x0009ffff]
+[    0.002777] RAMDISK: [mem 0x2f249000-0x3391bfff]
+[    0.002783] ACPI: Early table checksum verification disabled
+[    0.002786] ACPI: RSDP 0x00000000000E0000 000024 (v02 VBOX  )
+[    0.002790] ACPI: XSDT 0x00000000DFFF0030 00003C (v01 VBOX   VBOXXSDT 00000001 ASL  00000061)
+[    0.002796] ACPI: FACP 0x00000000DFFF00F0 0000F4 (v04 VBOX   VBOXFACP 00000001 ASL  00000061)
+[    0.002801] ACPI: DSDT 0x00000000DFFF0630 002353 (v02 VBOX   VBOXBIOS 00000002 INTL 20100528)
+[    0.002804] ACPI: FACS 0x00000000DFFF0200 000040
+[    0.002807] ACPI: FACS 0x00000000DFFF0200 000040
+[    0.002810] ACPI: APIC 0x00000000DFFF0240 00007C (v02 VBOX   VBOXAPIC 00000001 ASL  00000061)
+[    0.002813] ACPI: SSDT 0x00000000DFFF02C0 00036C (v01 VBOX   VBOXCPUT 00000002 INTL 20100528)
+[    0.002816] ACPI: Reserving FACP table memory at [mem 0xdfff00f0-0xdfff01e3]
+[    0.002817] ACPI: Reserving DSDT table memory at [mem 0xdfff0630-0xdfff2982]
+[    0.002818] ACPI: Reserving FACS table memory at [mem 0xdfff0200-0xdfff023f]
+[    0.002819] ACPI: Reserving FACS table memory at [mem 0xdfff0200-0xdfff023f]
+[    0.002819] ACPI: Reserving APIC table memory at [mem 0xdfff0240-0xdfff02bb]
+[    0.002820] ACPI: Reserving SSDT table memory at [mem 0xdfff02c0-0xdfff062b]
+[    0.004080] No NUMA configuration found
+[    0.004082] Faking a node at [mem 0x0000000000000000-0x000000021fffffff]
+[    0.004090] NODE_DATA(0) allocated [mem 0x21ffd2000-0x21fffbfff]
+[    0.005117] Zone ranges:
+[    0.005118]   DMA      [mem 0x0000000000001000-0x0000000000ffffff]
+[    0.005120]   DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
+[    0.005121]   Normal   [mem 0x0000000100000000-0x000000021fffffff]
+[    0.005123]   Device   empty
+[    0.005124] Movable zone start for each node
+[    0.005126] Early memory node ranges
+[    0.005126]   node   0: [mem 0x0000000000001000-0x000000000009efff]
+[    0.005127]   node   0: [mem 0x0000000000100000-0x00000000dffeffff]
+[    0.005129]   node   0: [mem 0x0000000100000000-0x000000021fffffff]
+[    0.005130] Initmem setup node 0 [mem 0x0000000000001000-0x000000021fffffff]
+[    0.005187] On node 0, zone DMA: 1 pages in unavailable ranges
+[    0.006201] On node 0, zone DMA: 97 pages in unavailable ranges
+[    0.559373] On node 0, zone Normal: 16 pages in unavailable ranges
+[    0.561647] ACPI: PM-Timer IO Port: 0x4008
+[    0.561968] IOAPIC[0]: apic_id 6, version 32, address 0xfec00000, GSI 0-23
+[    0.561973] ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 dfl dfl)
+[    0.561975] ACPI: INT_SRC_OVR (bus 0 bus_irq 9 global_irq 9 low level)
+[    0.561978] ACPI: Using ACPI (MADT) for SMP configuration information
+[    0.562012] smpboot: Allowing 6 CPUs, 0 hotplug CPUs
+[    0.562190] PM: hibernation: Registered nosave memory: [mem 0x00000000-0x00000fff]
+[    0.562192] PM: hibernation: Registered nosave memory: [mem 0x0009f000-0x0009ffff]
+[    0.562193] PM: hibernation: Registered nosave memory: [mem 0x000a0000-0x000effff]
+[    0.562194] PM: hibernation: Registered nosave memory: [mem 0x000f0000-0x000fffff]
+[    0.562195] PM: hibernation: Registered nosave memory: [mem 0xdfff0000-0xdfffffff]
+[    0.562196] PM: hibernation: Registered nosave memory: [mem 0xe0000000-0xfebfffff]
+[    0.562196] PM: hibernation: Registered nosave memory: [mem 0xfec00000-0xfec00fff]
+[    0.562197] PM: hibernation: Registered nosave memory: [mem 0xfec01000-0xfedfffff]
+[    0.562198] PM: hibernation: Registered nosave memory: [mem 0xfee00000-0xfee00fff]
+[    0.562198] PM: hibernation: Registered nosave memory: [mem 0xfee01000-0xfffbffff]
+[    0.562199] PM: hibernation: Registered nosave memory: [mem 0xfffc0000-0xffffffff]
+[    0.562200] [mem 0xe0000000-0xfebfffff] available for PCI devices
+[    0.562201] Booting paravirtualized kernel on KVM
+[    0.562203] clocksource: refined-jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645519600211568 ns
+[    0.562208] setup_percpu: NR_CPUS:8192 nr_cpumask_bits:6 nr_cpu_ids:6 nr_node_ids:1
+[    0.570728] percpu: Embedded 61 pages/cpu s212992 r8192 d28672 u262144
+[    0.570733] pcpu-alloc: s212992 r8192 d28672 u262144 alloc=1*2097152
+[    0.570736] pcpu-alloc: [0] 0 1 2 3 4 5 - - 
+[    0.570969] kvm-guest: PV spinlocks enabled
+[    0.570972] PV qspinlock hash table entries: 256 (order: 0, 4096 bytes, linear)
+[    0.571012] Built 1 zonelists, mobility grouping on.  Total pages: 2064112
+[    0.571014] Policy zone: Normal
+[    0.571015] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-87-generic root=UUID=3fee5075-e6a6-4bab-845d-5796d148f4ef ro quiet splash
+[    0.571068] Unknown kernel command line parameters "splash BOOT_IMAGE=/boot/vmlinuz-5.15.0-87-generic", will be passed to user space.
+[    0.604982] Dentry cache hash table entries: 1048576 (order: 11, 8388608 bytes, linear)
+[    0.621789] Inode-cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
+[    0.622129] mem auto-init: stack:off, heap alloc:on, heap free:off
+[    0.785035] Memory: 8045912K/8388152K available (16393K kernel code, 4388K rwdata, 10844K rodata, 3352K init, 18732K bss, 341980K reserved, 0K cma-reserved)
+[    0.786208] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=6, Nodes=1
+[    0.786307] Kernel/User page tables isolation: enabled
+[    0.786651] ftrace: allocating 50168 entries in 196 pages
+[    0.807867] ftrace: allocated 196 pages with 3 groups
+[    0.809300] rcu: Hierarchical RCU implementation.
+[    0.809301] rcu: 	RCU restricting CPUs from NR_CPUS=8192 to nr_cpu_ids=6.
+[    0.809302] 	Rude variant of Tasks RCU enabled.
+[    0.809303] 	Tracing variant of Tasks RCU enabled.
+[    0.809303] rcu: RCU calculated value of scheduler-enlistment delay is 25 jiffies.
+[    0.809304] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=6
+[    0.814872] NR_IRQS: 524544, nr_irqs: 472, preallocated irqs: 16
+[    0.815611] random: crng init done
+[    0.868104] Console: colour VGA+ 80x25
+[    0.868116] printk: console [tty0] enabled
+[    0.868185] ACPI: Core revision 20210730
+[    0.868528] APIC: Switch to symmetric I/O mode setup
+[    0.888778] ..TIMER: vector=0x30 apic1=0 pin1=2 apic2=-1 pin2=-1
+[    0.889101] clocksource: tsc-early: mask: 0xffffffffffffffff max_cycles: 0x255cbea3061, max_idle_ns: 440795313801 ns
+[    0.889108] Calibrating delay loop (skipped) preset value.. 5184.01 BogoMIPS (lpj=10368032)
+[    0.894789] Last level iTLB entries: 4KB 64, 2MB 8, 4MB 8
+[    0.894791] Last level dTLB entries: 4KB 64, 2MB 0, 4MB 0, 1GB 4
+[    0.894794] Spectre V1 : Mitigation: usercopy/swapgs barriers and __user pointer sanitization
+[    0.894796] Spectre V2 : Mitigation: Retpolines
+[    0.894796] Spectre V2 : Spectre v2 / SpectreRSB mitigation: Filling RSB on context switch
+[    0.894797] Spectre V2 : Spectre v2 / SpectreRSB : Filling RSB on VMEXIT
+[    0.894797] RETBleed: WARNING: Spectre v2 mitigation leaves CPU vulnerable to RETBleed attacks, data leaks possible!
+[    0.897107] RETBleed: Vulnerable
+[    0.897108] Speculative Store Bypass: Vulnerable
+[    0.897113] MDS: Mitigation: Clear CPU buffers
+[    0.897114] MMIO Stale Data: Mitigation: Clear CPU buffers
+[    0.897115] SRBDS: Unknown: Dependent on hypervisor status
+[    0.897117] x86/fpu: x87 FPU will use FXSAVE
+[    0.914036] Freeing SMP alternatives memory: 40K
+[    0.914040] pid_max: default: 32768 minimum: 301
+[    0.914066] LSM: Security Framework initializing
+[    0.914074] landlock: Up and running.
+[    0.914075] Yama: becoming mindful.
+[    0.914238] AppArmor: AppArmor initialized
+[    0.914811] Mount-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.915339] Mountpoint-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    1.025549] smpboot: CPU0: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz (family: 0x6, model: 0x9e, stepping: 0xa)
+[    1.026723] Performance Events: unsupported p6 CPU model 158 no PMU driver, software events only.
+[    1.026735] signal: max sigframe size: 1440
+[    1.026825] rcu: Hierarchical SRCU implementation.
+[    1.027957] NMI watchdog: Perf NMI watchdog permanently disabled
+[    1.028696] smp: Bringing up secondary CPUs ...
+[    1.029105] x86: Booting SMP configuration:
+[    1.029105] .... node  #0, CPUs:      #1
+[    0.069513] kvm-clock: cpu 1, msr 169a01041, secondary cpu clock
+[    1.035147] TSC synchronization [CPU#0 -> CPU#1]:
+[    1.035149] Measured 93070 cycles TSC warp between CPUs, turning off TSC clock.
+[    1.035150] tsc: Marking TSC unstable due to check_tsc_sync_source failed
+[    1.037171]  #2
+[    0.069513] kvm-clock: cpu 2, msr 169a01081, secondary cpu clock
+[    1.041596]  #3
+[    0.069513] kvm-clock: cpu 3, msr 169a010c1, secondary cpu clock
+[    1.046148]  #4
+[    0.069513] kvm-clock: cpu 4, msr 169a01101, secondary cpu clock
+[    1.053980]  #5
+[    0.069513] kvm-clock: cpu 5, msr 169a01141, secondary cpu clock
+[    1.065411] smp: Brought up 1 node, 6 CPUs
+[    1.065414] smpboot: Max logical packages: 1
+[    1.065415] smpboot: Total of 6 processors activated (31104.09 BogoMIPS)
+[    1.065964] devtmpfs: initialized
+[    1.065964] x86/mm: Memory block size: 128MB
+[    1.069476] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    1.069897] futex hash table entries: 2048 (order: 5, 131072 bytes, linear)
+[    1.069965] pinctrl core: initialized pinctrl subsystem
+[    1.070616] PM: RTC time: 18:32:39, date: 2023-10-29
+[    1.076794] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    1.080930] DMA: preallocated 1024 KiB GFP_KERNEL pool for atomic allocations
+[    1.081026] DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+[    1.081089] DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    1.081097] audit: initializing netlink subsys (disabled)
+[    1.081105] audit: type=2000 audit(1698604375.018:1): state=initialized audit_enabled=0 res=1
+[    1.081122] thermal_sys: Registered thermal governor 'fair_share'
+[    1.081123] thermal_sys: Registered thermal governor 'bang_bang'
+[    1.081124] thermal_sys: Registered thermal governor 'step_wise'
+[    1.081124] thermal_sys: Registered thermal governor 'user_space'
+[    1.081125] thermal_sys: Registered thermal governor 'power_allocator'
+[    1.081129] EISA bus registered
+[    1.081136] cpuidle: using governor ladder
+[    1.081139] cpuidle: using governor menu
+[    1.081219] ACPI: bus type PCI registered
+[    1.081221] acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+[    1.081848] PCI: Using configuration type 1 for base access
+[    1.084213] kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+[    1.085248] HugeTLB registered 2.00 MiB page size, pre-allocated 0 pages
+[    1.125436] ACPI: Added _OSI(Module Device)
+[    1.125438] ACPI: Added _OSI(Processor Device)
+[    1.125439] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    1.125439] ACPI: Added _OSI(Processor Aggregator Device)
+[    1.125440] ACPI: Added _OSI(Linux-Dell-Video)
+[    1.125441] ACPI: Added _OSI(Linux-Lenovo-NV-HDMI-Audio)
+[    1.125442] ACPI: Added _OSI(Linux-HPI-Hybrid-Graphics)
+[    1.127820] ACPI: 2 ACPI AML tables successfully acquired and loaded
+[    1.129939] ACPI: Interpreter enabled
+[    1.129947] ACPI: PM: (supports S0 S5)
+[    1.129948] ACPI: Using IOAPIC for interrupt routing
+[    1.130305] PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
+[    1.130306] PCI: Using E820 reservations for host bridge windows
+[    1.130428] ACPI: Enabled 2 GPEs in block 00 to 07
+[    1.136111] ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-ff])
+[    1.136116] acpi PNP0A03:00: _OSC: OS supports [ASPM ClockPM Segments MSI EDR HPX-Type3]
+[    1.136791] acpi PNP0A03:00: _OSC: not requesting OS control; OS requires [ExtendedConfig ASPM ClockPM MSI]
+[    1.136797] acpi PNP0A03:00: fail to add MMCONFIG information, can't access extended PCI configuration space under this bridge.
+[    1.137105] PCI host bridge to bus 0000:00
+[    1.137105] pci_bus 0000:00: root bus resource [bus 00-ff]
+[    1.137105] pci_bus 0000:00: root bus resource [io  0x0000-0x0cf7 window]
+[    1.137105] pci_bus 0000:00: root bus resource [io  0x0d00-0xffff window]
+[    1.137105] pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000bffff window]
+[    1.137105] pci_bus 0000:00: root bus resource [mem 0xe0000000-0xfdffffff window]
+[    1.137105] pci 0000:00:00.0: [8086:1237] type 00 class 0x060000
+[    1.145562] pci 0000:00:01.0: [8086:7000] type 00 class 0x060100
+[    1.148154] pci 0000:00:01.1: [8086:7111] type 00 class 0x01018a
+[    1.149105] pci 0000:00:01.1: reg 0x20: [io  0xd000-0xd00f]
+[    1.149105] pci 0000:00:01.1: legacy IDE quirk: reg 0x10: [io  0x01f0-0x01f7]
+[    1.149105] pci 0000:00:01.1: legacy IDE quirk: reg 0x14: [io  0x03f6]
+[    1.149105] pci 0000:00:01.1: legacy IDE quirk: reg 0x18: [io  0x0170-0x0177]
+[    1.149105] pci 0000:00:01.1: legacy IDE quirk: reg 0x1c: [io  0x0376]
+[    1.154173] pci 0000:00:02.0: [15ad:0405] type 00 class 0x030000
+[    1.157105] pci 0000:00:02.0: reg 0x10: [io  0xd010-0xd01f]
+[    1.157108] pci 0000:00:02.0: reg 0x14: [mem 0xe0000000-0xe3ffffff pref]
+[    1.160954] pci 0000:00:02.0: reg 0x18: [mem 0xf0000000-0xf01fffff]
+[    1.165037] pci 0000:00:02.0: Video device with shadowed ROM at [mem 0x000c0000-0x000dffff]
+[    1.170014] pci 0000:00:03.0: [8086:100e] type 00 class 0x020000
+[    1.173478] pci 0000:00:03.0: reg 0x10: [mem 0xf0200000-0xf021ffff]
+[    1.174042] pci 0000:00:03.0: reg 0x18: [io  0xd020-0xd027]
+[    1.181105] pci 0000:00:04.0: [80ee:cafe] type 00 class 0x088000
+[    1.181105] pci 0000:00:04.0: reg 0x10: [io  0xd040-0xd05f]
+[    1.181105] pci 0000:00:04.0: reg 0x14: [mem 0xf0400000-0xf07fffff]
+[    1.181423] pci 0000:00:04.0: reg 0x18: [mem 0xf0800000-0xf0803fff pref]
+[    1.189105] pci 0000:00:05.0: [8086:2415] type 00 class 0x040100
+[    1.189105] pci 0000:00:05.0: reg 0x10: [io  0xd100-0xd1ff]
+[    1.189205] pci 0000:00:05.0: reg 0x14: [io  0xd200-0xd23f]
+[    1.196005] pci 0000:00:06.0: [106b:003f] type 00 class 0x0c0310
+[    1.196511] pci 0000:00:06.0: reg 0x10: [mem 0xf0804000-0xf0804fff]
+[    1.201108] pci 0000:00:07.0: [8086:7113] type 00 class 0x068000
+[    1.203027] pci 0000:00:07.0: quirk: [io  0x4000-0x403f] claimed by PIIX4 ACPI
+[    1.203063] pci 0000:00:07.0: quirk: [io  0x4100-0x410f] claimed by PIIX4 SMB
+[    1.222824] pci 0000:00:0b.0: [8086:265c] type 00 class 0x0c0320
+[    1.223325] pci 0000:00:0b.0: reg 0x10: [mem 0xf0805000-0xf0805fff]
+[    1.233105] pci 0000:00:0d.0: [8086:2829] type 00 class 0x010601
+[    1.233105] pci 0000:00:0d.0: reg 0x10: [io  0xd240-0xd247]
+[    1.233105] pci 0000:00:0d.0: reg 0x14: [io  0xd248-0xd24b]
+[    1.233105] pci 0000:00:0d.0: reg 0x18: [io  0xd250-0xd257]
+[    1.233246] pci 0000:00:0d.0: reg 0x1c: [io  0xd258-0xd25b]
+[    1.233504] pci 0000:00:0d.0: reg 0x20: [io  0xd260-0xd26f]
+[    1.233761] pci 0000:00:0d.0: reg 0x24: [mem 0xf0806000-0xf0807fff]
+[    1.322886] ACPI: PCI: Interrupt link LNKA configured for IRQ 11
+[    1.323386] ACPI: PCI: Interrupt link LNKB configured for IRQ 10
+[    1.323576] ACPI: PCI: Interrupt link LNKC configured for IRQ 9
+[    1.323766] ACPI: PCI: Interrupt link LNKD configured for IRQ 11
+[    1.324191] iommu: Default domain type: Translated 
+[    1.324191] iommu: DMA domain TLB invalidation policy: lazy mode 
+[    1.325430] SCSI subsystem initialized
+[    1.325537] libata version 3.00 loaded.
+[    1.325537] pci 0000:00:02.0: vgaarb: setting as boot VGA device
+[    1.325537] pci 0000:00:02.0: vgaarb: VGA device added: decodes=io+mem,owns=io+mem,locks=none
+[    1.325537] pci 0000:00:02.0: vgaarb: bridge control possible
+[    1.325537] vgaarb: loaded
+[    1.325537] ACPI: bus type USB registered
+[    1.325537] usbcore: registered new interface driver usbfs
+[    1.325537] usbcore: registered new interface driver hub
+[    1.325537] usbcore: registered new device driver usb
+[    1.325537] pps_core: LinuxPPS API ver. 1 registered
+[    1.325537] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    1.325537] PTP clock support registered
+[    1.325537] EDAC MC: Ver: 3.0.0
+[    1.329649] NetLabel: Initializing
+[    1.329650] NetLabel:  domain hash size = 128
+[    1.329651] NetLabel:  protocols = UNLABELED CIPSOv4 CALIPSO
+[    1.329973] NetLabel:  unlabeled traffic allowed by default
+[    1.330090] PCI: Using ACPI for IRQ routing
+[    1.330090] PCI: pci_cache_line_size set to 64 bytes
+[    1.330090] e820: reserve RAM buffer [mem 0x0009fc00-0x0009ffff]
+[    1.330090] e820: reserve RAM buffer [mem 0xdfff0000-0xdfffffff]
+[    1.333111] clocksource: Switched to clocksource kvm-clock
+[    1.395356] VFS: Disk quotas dquot_6.6.0
+[    1.395524] VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    1.395900] AppArmor: AppArmor Filesystem Enabled
+[    1.395917] pnp: PnP ACPI init
+[    1.397383] pnp: PnP ACPI: found 2 devices
+[    1.446832] clocksource: acpi_pm: mask: 0xffffff max_cycles: 0xffffff, max_idle_ns: 2085701024 ns
+[    1.446921] NET: Registered PF_INET protocol family
+[    1.451437] IP idents hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+[    1.455357] tcp_listen_portaddr_hash hash table entries: 4096 (order: 4, 65536 bytes, linear)
+[    1.456442] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    1.458904] TCP established hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    1.464153] TCP bind hash table entries: 65536 (order: 8, 1048576 bytes, linear)
+[    1.464198] TCP: Hash tables configured (established 65536 bind 65536)
+[    1.465214] MPTCP token hash table entries: 8192 (order: 5, 196608 bytes, linear)
+[    1.465214] UDP hash table entries: 4096 (order: 5, 131072 bytes, linear)
+[    1.465214] UDP-Lite hash table entries: 4096 (order: 5, 131072 bytes, linear)
+[    1.465214] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    1.465214] NET: Registered PF_XDP protocol family
+[    1.465214] pci_bus 0000:00: resource 4 [io  0x0000-0x0cf7 window]
+[    1.465214] pci_bus 0000:00: resource 5 [io  0x0d00-0xffff window]
+[    1.465214] pci_bus 0000:00: resource 6 [mem 0x000a0000-0x000bffff window]
+[    1.465214] pci_bus 0000:00: resource 7 [mem 0xe0000000-0xfdffffff window]
+[    1.465214] pci 0000:00:00.0: Limiting direct PCI/PCI transfers
+[    1.465214] pci 0000:00:01.0: Activating ISA DMA hang workarounds
+[    1.465214] PCI: CLS 0 bytes, default 64
+[    1.465214] PCI-DMA: Using software bounce buffering for IO (SWIOTLB)
+[    1.465214] software IO TLB: mapped [mem 0x00000000dbff0000-0x00000000dfff0000] (64MB)
+[    1.465214] platform rtc_cmos: registered platform RTC device (no PNP device found)
+[    1.472345] Trying to unpack rootfs image as initramfs...
+[    1.475880] Initialise system trusted keyrings
+[    1.475886] Key type blacklist registered
+[    1.476460] workingset: timestamp_bits=36 max_order=21 bucket_order=0
+[    1.479919] zbud: loaded
+[    1.480316] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    1.482682] fuse: init (API version 7.34)
+[    1.492464] integrity: Platform Keyring initialized
+[    1.499132] Key type asymmetric registered
+[    1.499133] Asymmetric key parser 'x509' registered
+[    1.499294] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 243)
+[    1.499949] io scheduler mq-deadline registered
+[    1.509857] shpchp: Standard Hot Plug PCI Controller Driver version: 0.4
+[    1.510149] ACPI: AC: AC Adapter [AC] (on-line)
+[    1.510205] input: Power Button as /devices/LNXSYSTM:00/LNXPWRBN:00/input/input0
+[    1.510270] ACPI: button: Power Button [PWRF]
+[    1.510388] input: Sleep Button as /devices/LNXSYSTM:00/LNXSLPBN:00/input/input1
+[    1.510400] ACPI: button: Sleep Button [SLPF]
+[    1.512210] Serial: 8250/16550 driver, 32 ports, IRQ sharing enabled
+[    1.514698] ACPI: battery: Slot [BAT0] (battery present)
+[    1.531149] Linux agpgart interface v0.103
+[    1.549793] loop: module loaded
+[    1.550835] ata_piix 0000:00:01.1: version 2.13
+[    1.553786] scsi host0: ata_piix
+[    1.555228] scsi host1: ata_piix
+[    1.555330] ata1: PATA max UDMA/33 cmd 0x1f0 ctl 0x3f6 bmdma 0xd000 irq 14
+[    1.555332] ata2: PATA max UDMA/33 cmd 0x170 ctl 0x376 bmdma 0xd008 irq 15
+[    1.556271] tun: Universal TUN/TAP device driver, 1.6
+[    1.556712] PPP generic driver version 2.4.2
+[    1.557656] VFIO - User Level meta-driver version: 0.3
+[    1.559496] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    1.559499] ehci-pci: EHCI PCI platform driver
+[    1.560530] ehci-pci 0000:00:0b.0: EHCI Host Controller
+[    1.560535] ehci-pci 0000:00:0b.0: new USB bus registered, assigned bus number 1
+[    1.561670] ehci-pci 0000:00:0b.0: irq 19, io mem 0xf0805000
+[    1.588936] ehci-pci 0000:00:0b.0: USB 2.0 started, EHCI 1.00
+[    1.589035] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.15
+[    1.589037] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.589039] usb usb1: Product: EHCI Host Controller
+[    1.589040] usb usb1: Manufacturer: Linux 5.15.0-87-generic ehci_hcd
+[    1.589041] usb usb1: SerialNumber: 0000:00:0b.0
+[    1.589744] hub 1-0:1.0: USB hub found
+[    1.589750] hub 1-0:1.0: 12 ports detected
+[    1.590568] ehci-platform: EHCI generic platform driver
+[    1.590578] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    1.590581] ohci-pci: OHCI PCI platform driver
+[    1.591608] ohci-pci 0000:00:06.0: OHCI PCI host controller
+[    1.591613] ohci-pci 0000:00:06.0: new USB bus registered, assigned bus number 2
+[    1.592090] ohci-pci 0000:00:06.0: irq 22, io mem 0xf0804000
+[    1.730838] usb usb2: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 5.15
+[    1.730842] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    1.730844] usb usb2: Product: OHCI PCI host controller
+[    1.730845] usb usb2: Manufacturer: Linux 5.15.0-87-generic ohci_hcd
+[    1.730846] usb usb2: SerialNumber: 0000:00:06.0
+[    1.731189] hub 2-0:1.0: USB hub found
+[    1.731261] hub 2-0:1.0: 12 ports detected
+[    1.739423] ata2.00: ATAPI: VBOX CD-ROM, 1.0, max UDMA/133
+[    1.739514] ohci-platform: OHCI generic platform driver
+[    1.739523] uhci_hcd: USB Universal Host Controller Interface driver
+[    1.739950] i8042: PNP: PS/2 Controller [PNP0303:PS2K,PNP0f03:PS2M] at 0x60,0x64 irq 1,12
+[    1.744202] serio: i8042 KBD port at 0x60,0x64 irq 1
+[    1.744208] serio: i8042 AUX port at 0x60,0x64 irq 12
+[    1.747941] mousedev: PS/2 mouse device common for all mice
+[    1.753004] input: AT Translated Set 2 keyboard as /devices/platform/i8042/serio0/input/input2
+[    1.753777] rtc_cmos rtc_cmos: registered as rtc0
+[    1.754845] rtc_cmos rtc_cmos: setting system clock to 2023-10-29T18:32:40 UTC (1698604360)
+[    1.755070] rtc_cmos rtc_cmos: alarms up to one day, 114 bytes nvram
+[    1.755079] i2c_dev: i2c /dev entries driver
+[    1.755121] device-mapper: core: CONFIG_IMA_DISABLE_HTABLE is disabled. Duplicate IMA measurements will not be recorded in the IMA log.
+[    1.755164] device-mapper: uevent: version 1.0.3
+[    1.755729] device-mapper: ioctl: 4.45.0-ioctl (2021-03-22) initialised: dm-devel@redhat.com
+[    1.755781] platform eisa.0: Probing EISA bus 0
+[    1.755784] platform eisa.0: EISA: Cannot allocate resource for mainboard
+[    1.755785] platform eisa.0: Cannot allocate resource for EISA slot 1
+[    1.755786] platform eisa.0: Cannot allocate resource for EISA slot 2
+[    1.755787] platform eisa.0: Cannot allocate resource for EISA slot 3
+[    1.755787] platform eisa.0: Cannot allocate resource for EISA slot 4
+[    1.755788] platform eisa.0: Cannot allocate resource for EISA slot 5
+[    1.755789] platform eisa.0: Cannot allocate resource for EISA slot 6
+[    1.755790] platform eisa.0: Cannot allocate resource for EISA slot 7
+[    1.755791] platform eisa.0: Cannot allocate resource for EISA slot 8
+[    1.755791] platform eisa.0: EISA: Detected 0 cards
+[    1.755814] intel_pstate: CPU model not supported
+[    1.778387] ledtrig-cpu: registered to indicate activity on CPUs
+[    1.778494] drop_monitor: Initializing network drop monitor service
+[    1.778791] NET: Registered PF_INET6 protocol family
+[    1.780864] scsi 1:0:0:0: CD-ROM            VBOX     CD-ROM           1.0  PQ: 0 ANSI: 5
+[    1.784177] sr 1:0:0:0: [sr0] scsi3-mmc drive: 32x/32x xa/form2 tray
+[    1.784180] cdrom: Uniform CD-ROM driver Revision: 3.20
+[    1.796178] sr 1:0:0:0: Attached scsi CD-ROM sr0
+[    1.796579] sr 1:0:0:0: Attached scsi generic sg0 type 5
+[    2.198690] usb 2-1: new full-speed USB device number 2 using ohci-pci
+[    2.656132] usb 2-1: New USB device found, idVendor=80ee, idProduct=0021, bcdDevice= 1.00
+[    2.656138] usb 2-1: New USB device strings: Mfr=1, Product=3, SerialNumber=0
+[    2.656140] usb 2-1: Product: USB Tablet
+[    2.656142] usb 2-1: Manufacturer: VirtualBox
+[    2.833844] Freeing initrd memory: 72524K
+[    2.858709] Segment Routing with IPv6
+[    2.858721] In-situ OAM (IOAM) with IPv6
+[    2.858742] NET: Registered PF_PACKET protocol family
+[    2.859342] Key type dns_resolver registered
+[    2.862493] IPI shorthand broadcast: enabled
+[    2.862613] sched_clock: Marking stable (2796907654, 65513831)->(2999200415, -136778930)
+[    2.864190] registered taskstats version 1
+[    2.867279] Loading compiled-in X.509 certificates
+[    2.869372] Loaded X.509 cert 'Build time autogenerated kernel key: 189daa63abdfec6beae163287c48f0a4013d0995'
+[    2.869759] Loaded X.509 cert 'Canonical Ltd. Live Patch Signing: 14df34d1a87cf37625abec039ef2bf521249b969'
+[    2.870899] Loaded X.509 cert 'Canonical Ltd. Kernel Module Signing: 88f752e560a1e0737e31163a466ad7b70a850c19'
+[    2.870902] blacklist: Loading compiled-in revocation X.509 certificates
+[    2.870917] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing: 61482aa2830d0ab2ad5af10b7250da9033ddcef0'
+[    2.870929] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2017): 242ade75ac4a15e50d50c84b0d45ff3eae707a03'
+[    2.870939] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (ESM 2018): 365188c1d374d6b07c3c8f240f8ef722433d6a8b'
+[    2.870949] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2019): c0746fd6c5da3ae827864651ad66ae47fe24b3e8'
+[    2.871119] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v1): a8d54bbb3825cfb94fa13c9f8a594a195c107b8d'
+[    2.871140] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v2): 4cf046892d6fd3c9a5b03f98d845f90851dc6a8c'
+[    2.871157] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (2021 v3): 100437bb6de6e469b581e61cd66bce3ef4ed53af'
+[    2.871178] Loaded X.509 cert 'Canonical Ltd. Secure Boot Signing (Ubuntu Core 2019): c1d57b8f6b743f23ee41f4f7ee292f06eecadfb9'
+[    2.875967] zswap: loaded using pool lzo/zbud
+[    2.879643] Key type .fscrypt registered
+[    2.879645] Key type fscrypt-provisioning registered
+[    2.897422] Key type encrypted registered
+[    2.897428] AppArmor: AppArmor sha1 policy hashing enabled
+[    2.897438] ima: No TPM chip found, activating TPM-bypass!
+[    2.897442] Loading compiled-in module X.509 certificates
+[    2.897829] Loaded X.509 cert 'Build time autogenerated kernel key: 189daa63abdfec6beae163287c48f0a4013d0995'
+[    2.897831] ima: Allocated hash algorithm: sha1
+[    2.897835] ima: No architecture policies found
+[    2.897875] evm: Initialising EVM extended attributes:
+[    2.897876] evm: security.selinux
+[    2.897877] evm: security.SMACK64
+[    2.897878] evm: security.SMACK64EXEC
+[    2.897878] evm: security.SMACK64TRANSMUTE
+[    2.897879] evm: security.SMACK64MMAP
+[    2.897879] evm: security.apparmor
+[    2.897880] evm: security.ima
+[    2.897880] evm: security.capability
+[    2.897881] evm: HMAC attrs: 0x1
+[    2.900319] PM:   Magic number: 11:592:545
+[    2.900337] tty ttyS21: hash matches
+[    2.903084] RAS: Correctable Errors collector initialized.
+[    2.904777] Freeing unused decrypted memory: 2036K
+[    2.905560] Freeing unused kernel image (initmem) memory: 3352K
+[    2.927128] Write protecting the kernel read-only data: 30720k
+[    2.928525] Freeing unused kernel image (text/rodata gap) memory: 2036K
+[    2.931266] Freeing unused kernel image (rodata/data gap) memory: 1444K
+[    2.978864] x86/mm: Checked W+X mappings: passed, no W+X pages found.
+[    2.978868] x86/mm: Checking user space page tables
+[    3.029865] x86/mm: Checked W+X mappings: passed, no W+X pages found.
+[    3.029874] Run /init as init process
+[    3.029876]   with arguments:
+[    3.029876]     /init
+[    3.029878]     splash
+[    3.029878]   with environment:
+[    3.029879]     HOME=/
+[    3.029879]     TERM=linux
+[    3.029880]     BOOT_IMAGE=/boot/vmlinuz-5.15.0-87-generic
+[    3.286345] ACPI: video: Video Device [GFX0] (multi-head: yes  rom: no  post: no)
+[    3.288080] e1000: Intel(R) PRO/1000 Network Driver
+[    3.288082] e1000: Copyright (c) 1999-2006 Intel Corporation.
+[    3.288156] input: Video Bus as /devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/LNXVIDEO:00/input/input4
+[    3.292323] hid: raw HID events driver (C) Jiri Kosina
+[    3.295501] piix4_smbus 0000:00:07.0: SMBus Host Controller at 0x4100, revision 0
+[    3.431899] usbcore: registered new interface driver usbhid
+[    3.431904] usbhid: USB HID core driver
+[    3.698646] ahci 0000:00:0d.0: version 3.0
+[    3.719452] ahci 0000:00:0d.0: SSS flag set, parallel bus scan disabled
+[    3.769805] ahci 0000:00:0d.0: AHCI 0001.0100 32 slots 1 ports 3 Gbps 0x1 impl SATA mode
+[    3.769812] ahci 0000:00:0d.0: flags: 64bit ncq stag only ccc 
+[    3.878242] scsi host2: ahci
+[    3.879043] ata3: SATA max UDMA/133 abar m8192@0xf0806000 port 0xf0806100 irq 21
+[    3.964926] input: VirtualBox USB Tablet as /devices/pci0000:00/0000:00:06.0/usb2/2-1/2-1:1.0/0003:80EE:0021.0001/input/input6
+[    3.977954] hid-generic 0003:80EE:0021.0001: input,hidraw0: USB HID v1.10 Mouse [VirtualBox USB Tablet] on usb-0000:00:06.0-1/input0
+[    4.128815] input: ImExPS/2 Generic Explorer Mouse as /devices/platform/i8042/serio1/input/input5
+[    4.244319] ata3: SATA link up 3.0 Gbps (SStatus 123 SControl 300)
+[    4.244877] ata3.00: ATA-6: VBOX HARDDISK, 1.0, max UDMA/133
+[    4.244880] ata3.00: 629145600 sectors, multi 128: LBA48 NCQ (depth 32)
+[    4.245877] ata3.00: configured for UDMA/133
+[    4.246408] scsi 2:0:0:0: Direct-Access     ATA      VBOX HARDDISK    1.0  PQ: 0 ANSI: 5
+[    4.246877] sd 2:0:0:0: [sda] 629145600 512-byte logical blocks: (322 GB/300 GiB)
+[    4.246883] sd 2:0:0:0: [sda] Write Protect is off
+[    4.246884] sd 2:0:0:0: [sda] Mode Sense: 00 3a 00 00
+[    4.246891] sd 2:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+[    4.247126] sd 2:0:0:0: Attached scsi generic sg1 type 0
+[    4.319678]  sda: sda1 sda2 < sda5 >
+[    4.321713] sd 2:0:0:0: [sda] Attached SCSI disk
+[    4.816665] e1000 0000:00:03.0 eth0: (PCI:33MHz:32-bit) 08:00:27:22:4b:6b
+[    4.816673] e1000 0000:00:03.0 eth0: Intel(R) PRO/1000 Network Connection
+[    4.820517] e1000 0000:00:03.0 enp0s3: renamed from eth0
+[    5.437551] EXT4-fs (sda5): mounted filesystem with ordered data mode. Opts: (null). Quota mode: none.
+[   12.118328] systemd[1]: Inserted module 'autofs4'
+[   12.815841] systemd[1]: systemd 245.4-4ubuntu3.20 running in system mode. (+PAM +AUDIT +SELINUX +IMA +APPARMOR +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 +SECCOMP +BLKID +ELFUTILS +KMOD +IDN2 -IDN +PCRE2 default-hierarchy=hybrid)
+[   12.815871] systemd[1]: Detected virtualization oracle.
+[   12.815875] systemd[1]: Detected architecture x86-64.
+[   13.087585] systemd[1]: Set hostname to <Ubuntu>.
+[   17.903206] systemd[1]: Created slice system-modprobe.slice.
+[   17.903514] systemd[1]: Created slice system-systemd\x2dfsck.slice.
+[   17.903707] systemd[1]: Created slice User and Session Slice.
+[   17.903755] systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+[   17.903883] systemd[1]: Set up automount Arbitrary Executable File Formats File System Automount Point.
+[   17.903916] systemd[1]: Reached target User and Group Name Lookups.
+[   17.903929] systemd[1]: Reached target Remote File Systems.
+[   17.903936] systemd[1]: Reached target Slices.
+[   17.903946] systemd[1]: Reached target Mounting snaps.
+[   17.903958] systemd[1]: Reached target System Time Set.
+[   17.903981] systemd[1]: Reached target System Time Synchronized.
+[   17.915472] systemd[1]: Listening on Syslog Socket.
+[   17.915563] systemd[1]: Listening on fsck to fsckd communication Socket.
+[   17.915709] systemd[1]: Listening on initctl Compatibility Named Pipe.
+[   17.915846] systemd[1]: Listening on Journal Audit Socket.
+[   17.915905] systemd[1]: Listening on Journal Socket (/dev/log).
+[   17.915980] systemd[1]: Listening on Journal Socket.
+[   17.916050] systemd[1]: Listening on udev Control Socket.
+[   17.916099] systemd[1]: Listening on udev Kernel Socket.
+[   17.917383] systemd[1]: Mounting Huge Pages File System...
+[   17.919595] systemd[1]: Mounting POSIX Message Queue File System...
+[   17.921954] systemd[1]: Mounting Kernel Debug File System...
+[   17.924052] systemd[1]: Mounting Kernel Trace File System...
+[   17.938765] systemd[1]: Starting Journal Service...
+[   17.970866] systemd[1]: Starting Set the console keyboard layout...
+[   17.973019] systemd[1]: Starting Create list of static device nodes for the current kernel...
+[   17.974858] systemd[1]: Starting Load Kernel Module chromeos_pstore...
+[   17.976381] systemd[1]: Starting Load Kernel Module drm...
+[   17.977945] systemd[1]: Starting Load Kernel Module efi_pstore...
+[   17.992245] systemd[1]: Starting Load Kernel Module pstore_blk...
+[   18.002101] systemd[1]: Starting Load Kernel Module pstore_zone...
+[   18.026374] systemd[1]: Starting Load Kernel Module ramoops...
+[   18.071767] systemd[1]: Condition check resulted in Set Up Additional Binary Formats being skipped.
+[   18.071804] systemd[1]: Condition check resulted in File System Check on Root Device being skipped.
+[   18.143429] systemd[1]: Starting Load Kernel Modules...
+[   18.145190] systemd[1]: Starting Remount Root and Kernel File Systems...
+[   18.147432] systemd[1]: Starting udev Coldplug all Devices...
+[   18.149102] systemd[1]: Starting Uncomplicated firewall...
+[   18.155376] systemd[1]: Mounted Huge Pages File System.
+[   18.155467] systemd[1]: Mounted POSIX Message Queue File System.
+[   18.155599] systemd[1]: Mounted Kernel Debug File System.
+[   18.155687] systemd[1]: Mounted Kernel Trace File System.
+[   18.156188] systemd[1]: Finished Create list of static device nodes for the current kernel.
+[   18.164166] systemd[1]: modprobe@efi_pstore.service: Succeeded.
+[   18.164459] systemd[1]: Finished Load Kernel Module efi_pstore.
+[   18.205756] systemd[1]: Finished Uncomplicated firewall.
+[   18.312994] EXT4-fs (sda5): re-mounted. Opts: errors=remount-ro. Quota mode: none.
+[   18.314546] systemd[1]: Finished Remount Root and Kernel File Systems.
+[   18.315782] systemd[1]: Activating swap /swapfile...
+[   18.384183] systemd[1]: Condition check resulted in Rebuild Hardware Database being skipped.
+[   18.390406] systemd[1]: Starting Load/Save Random Seed...
+[   18.392300] systemd[1]: Starting Create System Users...
+[   18.442139] systemd[1]: Started Journal Service.
+[   18.769039] systemd-journald[277]: Received client request to flush runtime journal.
+[   19.196754] Adding 2097148k swap on /swapfile.  Priority:-2 extents:6 across:2260988k FS
+[   19.270159] lp: driver loaded but no devices found
+[   19.357936] ppdev: user-space parallel port driver
+[   20.022878] loop0: detected capacity change from 0 to 129608
+[   20.042272] loop1: detected capacity change from 0 to 8
+[   20.042480] loop2: detected capacity change from 0 to 129976
+[   20.074660] loop3: detected capacity change from 0 to 151352
+[   20.128464] loop4: detected capacity change from 0 to 709280
+[   20.194578] loop5: detected capacity change from 0 to 716176
+[   20.229833] loop6: detected capacity change from 0 to 1017608
+[   20.347797] loop7: detected capacity change from 0 to 1017816
+[   20.375142] loop8: detected capacity change from 0 to 187776
+[   20.423947] loop9: detected capacity change from 0 to 94064
+[   20.439896] loop10: detected capacity change from 0 to 25240
+[   20.470425] loop11: detected capacity change from 0 to 83648
+[   20.604714] loop12: detected capacity change from 0 to 83672
+[   25.823411] RAPL PMU: API unit is 2^-32 Joules, 0 fixed counters, 10737418240 ms ovfl timer
+[   26.864182] vboxguest: loading out-of-tree module taints kernel.
+[   26.864377] vboxguest: module verification failed: signature and/or required key missing - tainting kernel
+[   26.873478] vgdrvHeartbeatInit: Setting up heartbeat to trigger every 2000 milliseconds
+[   26.874414] Host supports full mouse state reporting, switching to extended mouse integration protocol
+[   26.874538] input: VirtualBox mouse integration as /devices/pci0000:00/0000:00:04.0/input/input7
+[   26.878352] vboxguest: Successfully loaded version 7.0.10 r158379
+[   26.878399] vboxguest: misc device minor 123, IRQ 20, I/O port d040, MMIO at 00000000f0400000 (size 0x400000)
+[   26.878401] vboxguest: Successfully loaded version 7.0.10 r158379 (interface 0x00010004)
+[   27.276465] cryptd: max_cpu_qlen set to 1000
+[   27.789377] hrtimer: interrupt took 17327660 ns
+[   28.222818] SSE version of gcm_enc/dec engaged.
+[   29.154923] vmwgfx 0000:00:02.0: vgaarb: deactivate vga console
+[   29.155370] Console: switching to colour dummy device 80x25
+[   29.171274] [TTM] Zone  kernel: Available graphics memory: 4063802 KiB
+[   29.171277] [TTM] Zone   dma32: Available graphics memory: 2097152 KiB
+[   29.171726] vmwgfx 0000:00:02.0: [drm] FIFO at 0x00000000f0000000 size is 2048 kiB
+[   29.171950] vmwgfx 0000:00:02.0: [drm] VRAM at 0x00000000e0000000 size is 65536 kiB
+[   29.172203] vmwgfx 0000:00:02.0: [drm] Running on SVGA version 2.
+[   29.172252] vmwgfx 0000:00:02.0: [drm] DMA map mode: Caching DMA mappings.
+[   29.172772] vmwgfx 0000:00:02.0: [drm] Legacy memory limits: VRAM = 65536 kB, FIFO = 2048 kB, surface = 458752 kB
+[   29.172775] vmwgfx 0000:00:02.0: [drm] MOB limits: max mob size = 0 kB, max mob pages = 0
+[   29.172779] vmwgfx 0000:00:02.0: [drm] Capabilities: rect copy, cursor, cursor bypass, cursor bypass 2, alpha cursor, extended fifo, pitchlock, irq mask, gmr, traces, gmr2, screen object 2, command buffers, 
+[   29.172781] vmwgfx 0000:00:02.0: [drm] Max GMR ids is 8192
+[   29.172782] vmwgfx 0000:00:02.0: [drm] Max number of GMR pages is 1048576
+[   29.172784] vmwgfx 0000:00:02.0: [drm] Maximum display memory size is 65536 kiB
+[   29.178860] vmwgfx 0000:00:02.0: [drm] Screen Object display unit initialized
+[   29.179289] vmwgfx 0000:00:02.0: [drm] Fifo max 0x00200000 min 0x00001000 cap 0x00000355
+[   29.179521] vmwgfx 0000:00:02.0: [drm] Using command buffers with DMA pool.
+[   29.179529] vmwgfx 0000:00:02.0: [drm] Available shader model: Legacy.
+[   29.179551] [drm:vmw_host_printf [vmwgfx]] *ERROR* Failed to send host log message.
+[   29.181730] fbcon: svgadrmfb (fb0) is primary device
+[   29.199219] Console: switching to colour frame buffer device 100x37
+[   29.201041] [drm] Initialized vmwgfx 2.19.0 20210722 for 0000:00:02.0 on minor 0
+[   30.089904] snd_intel8x0 0000:00:05.0: allow list rate for 1028:0177 is 48000
+[   34.825824] audit: type=1400 audit(1698604393.560:2): apparmor="STATUS" operation="profile_load" profile="unconfined" name="libreoffice-xpdfimport" pid=619 comm="apparmor_parser"
+[   34.825832] audit: type=1400 audit(1698604393.560:3): apparmor="STATUS" operation="profile_load" profile="unconfined" name="ippusbxd" pid=622 comm="apparmor_parser"
+[   34.839542] audit: type=1400 audit(1698604393.560:4): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/lib/snapd/snap-confine" pid=621 comm="apparmor_parser"
+[   34.839549] audit: type=1400 audit(1698604393.560:5): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/lib/snapd/snap-confine//mount-namespace-capture-helper" pid=621 comm="apparmor_parser"
+[   34.921248] audit: type=1400 audit(1698604393.636:6): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/sbin/cups-browsed" pid=620 comm="apparmor_parser"
+[   34.921253] audit: type=1400 audit(1698604393.656:7): apparmor="STATUS" operation="profile_load" profile="unconfined" name="nvidia_modprobe" pid=628 comm="apparmor_parser"
+[   34.921255] audit: type=1400 audit(1698604393.656:8): apparmor="STATUS" operation="profile_load" profile="unconfined" name="nvidia_modprobe//kmod" pid=628 comm="apparmor_parser"
+[   34.954644] audit: type=1400 audit(1698604393.696:9): apparmor="STATUS" operation="profile_load" profile="unconfined" name="libreoffice-oopslash" pid=630 comm="apparmor_parser"
+[   34.959063] audit: type=1400 audit(1698604393.700:10): apparmor="STATUS" operation="profile_load" profile="unconfined" name="libreoffice-senddoc" pid=631 comm="apparmor_parser"
+[   34.980503] audit: type=1400 audit(1698604393.720:11): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/lib/cups/backend/cups-pdf" pid=629 comm="apparmor_parser"
+[   43.394195] 18:33:22.139518 main     VBoxService 7.0.10 r158379 (verbosity: 0) linux.amd64 (Jul 12 2023 20:36:16) release log
+               18:33:22.139520 main     Log opened 2023-10-29T18:33:22.139514000Z
+[   43.394376] 18:33:22.139652 main     OS Product: Linux
+[   43.405850] 18:33:22.151186 main     OS Release: 5.15.0-87-generic
+[   43.405905] 18:33:22.151264 main     OS Version: #97~20.04.1-Ubuntu SMP Thu Oct 5 08:25:28 UTC 2023
+[   43.405984] 18:33:22.151317 main     Executable: /opt/VBoxGuestAdditions-7.0.10/sbin/VBoxService
+               18:33:22.151318 main     Process ID: 943
+               18:33:22.151318 main     Package type: LINUX_64BITS_GENERIC
+[   43.500857] 18:33:22.246191 main     7.0.10 r158379 started. Verbose level = 0
+[   43.502568] 18:33:22.247913 main     vbglR3GuestCtrlDetectPeekGetCancelSupport: Supported (#1)
+[   44.217622] kauditd_printk_skb: 27 callbacks suppressed
+[   44.217624] audit: type=1400 audit(1698604402.956:39): apparmor="DENIED" operation="capable" profile="/usr/sbin/cups-browsed" pid=789 comm="cups-browsed" capability=23  capname="sys_nice"
+[   47.937684] e1000: enp0s3 NIC Link is Up 1000 Mbps Full Duplex, Flow Control: RX
+[   47.939934] IPv6: ADDRCONF(NETDEV_CHANGE): enp0s3: link becomes ready
+[   59.972334] loop13: detected capacity change from 0 to 8
+[   60.444482] aufs 5.15.5-20211129
+[   74.486949] audit: type=1400 audit(1698604435.026:40): apparmor="STATUS" operation="profile_load" profile="unconfined" name="docker-default" pid=1296 comm="apparmor_parser"
+[   86.251938] bridge: filtering via arp/ip/ip6tables is no longer available by default. Update your scripts to load br_netfilter if you need this.
+[   86.508883] Bridge firewalling registered
+[   86.862850] bpfilter: Loaded bpfilter_umh pid 1341
+[   86.863497] Started bpfilter
+[   88.015338] Initializing XFRM netlink socket
+[  100.425963] rfkill: input handler disabled
+[  121.434419] rfkill: input handler enabled
+[  136.434709] rfkill: input handler disabled
+[  136.738301] ISO 9660 Extensions: Microsoft Joliet Level 3
+[  136.837639] ISO 9660 Extensions: RRIP_1991A
+[  454.678893] aesdchar: open
+[  454.678907] aesdchar: read 131072 bytes with offset 0
+[  454.678920] aesdchar: release
+[  454.870426] aesdchar: open
+[  454.870440] aesdchar: read 131072 bytes with offset 0
+[  454.870452] aesdchar: release
+[  454.940191] aesdchar: open
+[  454.940203] aesdchar: read 131072 bytes with offset 0
+[  454.940212] aesdchar: release
+[  476.803462] aesdchar: open
+[  476.803470] aesdchar: write 7 bytes with offset 0
+[  476.803473] aesdchar: release
+[  476.803477] aesdchar: open
+[  476.803481] aesdchar: write 7 bytes with offset 0
+[  476.803482] aesdchar: release
+[  476.803485] aesdchar: open
+[  476.803488] aesdchar: write 7 bytes with offset 0
+[  476.803489] aesdchar: release
+[  476.803492] aesdchar: open
+[  476.803494] aesdchar: write 7 bytes with offset 0
+[  476.803495] aesdchar: release
+[  476.803498] aesdchar: open
+[  476.803501] aesdchar: write 7 bytes with offset 0
+[  476.803502] aesdchar: release
+[  476.803505] aesdchar: open
+[  476.803507] aesdchar: write 7 bytes with offset 0
+[  476.803509] aesdchar: release
+[  476.803511] aesdchar: open
+[  476.803514] aesdchar: write 7 bytes with offset 0
+[  476.803515] aesdchar: release
+[  476.803518] aesdchar: open
+[  476.803521] aesdchar: write 7 bytes with offset 0
+[  476.803522] aesdchar: release
+[  476.803586] aesdchar: open
+[  476.803590] aesdchar: write 7 bytes with offset 0
+[  476.803592] aesdchar: release
+[  476.803595] aesdchar: open
+[  476.803598] aesdchar: write 8 bytes with offset 0
+[  476.803599] aesdchar: release
+[  476.819683] aesdchar: open
+[  476.819691] aesdchar: read 131072 bytes with offset 0
+[  476.819791] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  476.819830] #PF: supervisor write access in kernel mode
+[  476.819832] #PF: error_code(0x0002) - not-present page
+[  476.819833] PGD 0 P4D 0 
+[  476.819870] Oops: 0002 [#1] SMP PTI
+[  476.819874] CPU: 4 PID: 4303 Comm: cat Tainted: G           OE     5.15.0-87-generic #97~20.04.1-Ubuntu
+[  476.819894] Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+[  476.819896] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.819919] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  476.819941] RSP: 0018:ffffb57c03887df8 EFLAGS: 00010202
+[  476.819944] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000027
+[  476.819945] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  476.819947] RBP: ffffb57c03887e30 R08: ffff95c657d20580 R09: 0000000000000001
+[  476.819948] R10: 302074657366666f R11: 2074657366666f20 R12: ffff95c5f6d58b40
+[  476.819949] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  476.819950] FS:  00007fde72eb7580(0000) GS:ffff95c657d00000(0000) knlGS:0000000000000000
+[  476.819952] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  476.819953] CR2: 0000000000000000 CR3: 00000001dfc62001 CR4: 00000000000306e0
+[  476.819955] Call Trace:
+[  476.819974]  <TASK>
+[  476.820012]  ? show_regs.cold+0x1a/0x1f
+[  476.820233]  ? __die_body+0x20/0x70
+[  476.820356]  ? __die+0x2b/0x37
+[  476.820358]  ? page_fault_oops+0x136/0x2c0
+[  476.820395]  ? search_bpf_extables+0x63/0x80
+[  476.820467]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.820469]  ? search_exception_tables+0x5f/0x70
+[  476.820523]  ? kernelmode_fixup_or_oops+0xa2/0x120
+[  476.820525]  ? __bad_area_nosemaphore+0x15d/0x1a0
+[  476.820527]  ? __bad_area+0x56/0x80
+[  476.820528]  ? bad_area+0x16/0x20
+[  476.820530]  ? do_user_addr_fault+0x39e/0x660
+[  476.820532]  ? exc_page_fault+0x77/0x170
+[  476.820636]  ? asm_exc_page_fault+0x27/0x30
+[  476.820657]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.820659]  aesd_read+0x55/0xbc [aesdchar]
+[  476.820662]  vfs_read+0xa0/0x1a0
+[  476.820732]  ksys_read+0x67/0xf0
+[  476.820735]  __x64_sys_read+0x1a/0x20
+[  476.820757]  do_syscall_64+0x5c/0xc0
+[  476.820759]  ? exc_page_fault+0x89/0x170
+[  476.820761]  entry_SYSCALL_64_after_hwframe+0x62/0xcc
+[  476.820763] RIP: 0033:0x7fde72dd1fd2
+[  476.820765] Code: c0 e9 c2 fe ff ff 50 48 8d 3d aa cb 0a 00 e8 d5 1a 02 00 0f 1f 44 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 ec 28 48 89 54 24
+[  476.820767] RSP: 002b:00007fffc4a0ca98 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[  476.820769] RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007fde72dd1fd2
+[  476.820771] RDX: 0000000000020000 RSI: 00007fde72733000 RDI: 0000000000000003
+[  476.820772] RBP: 00007fde72733000 R08: 00007fde72732010 R09: 0000000000000000
+[  476.820773] R10: 0000000000000022 R11: 0000000000000246 R12: 000055a4070941f0
+[  476.820774] R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
+[  476.820776]  </TASK>
+[  476.820794] Modules linked in: aesdchar(OE) isofs xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xfrm_user xfrm_algo iptable_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 libcrc32c xt_addrtype iptable_filter bpfilter br_netfilter bridge stp llc aufs overlay nls_iso8859_1 binfmt_misc snd_intel8x0 snd_ac97_codec ac97_bus intel_rapl_msr snd_pcm intel_rapl_common snd_seq_midi snd_seq_midi_event snd_rawmidi vmwgfx crct10dif_pclmul snd_seq ghash_clmulni_intel ttm snd_seq_device drm_kms_helper aesni_intel snd_timer cec rc_core snd fb_sys_fops soundcore syscopyarea sysfillrect crypto_simd joydev sysimgblt cryptd input_leds vboxguest(OE) serio_raw mac_hid rapl sch_fq_codel msr parport_pc ppdev lp pstore_blk parport ramoops pstore_zone drm reed_solomon efi_pstore ip_tables x_tables autofs4 hid_generic ahci usbhid crc32_pclmul psmouse i2c_piix4 hid libahci e1000 pata_acpi video
+[  476.820908] CR2: 0000000000000000
+[  476.820944] ---[ end trace e358791d9fd4830b ]---
+[  476.820946] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.820949] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  476.820951] RSP: 0018:ffffb57c03887df8 EFLAGS: 00010202
+[  476.820953] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000027
+[  476.820954] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  476.820955] RBP: ffffb57c03887e30 R08: ffff95c657d20580 R09: 0000000000000001
+[  476.820976] R10: 302074657366666f R11: 2074657366666f20 R12: ffff95c5f6d58b40
+[  476.820977] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  476.820978] FS:  00007fde72eb7580(0000) GS:ffff95c657d00000(0000) knlGS:0000000000000000
+[  476.820979] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  476.820981] CR2: 0000000000000000 CR3: 00000001dfc62001 CR4: 00000000000306e0
+[  476.821083] aesdchar: release
+[  476.869511] aesdchar: open
+[  476.869521] aesdchar: write 8 bytes with offset 0
+[  476.869525] aesdchar: release
+[  476.883772] aesdchar: open
+[  476.883783] aesdchar: read 131072 bytes with offset 0
+[  476.883790] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  476.883792] #PF: supervisor write access in kernel mode
+[  476.883793] #PF: error_code(0x0002) - not-present page
+[  476.883794] PGD 0 P4D 0 
+[  476.883797] Oops: 0002 [#2] SMP PTI
+[  476.883799] CPU: 1 PID: 4315 Comm: cat Tainted: G      D    OE     5.15.0-87-generic #97~20.04.1-Ubuntu
+[  476.883801] Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+[  476.883802] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.883806] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  476.883856] RSP: 0018:ffffb57c038bfdd0 EFLAGS: 00010202
+[  476.883858] RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000027
+[  476.883860] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  476.883861] RBP: ffffb57c038bfe08 R08: ffff95c657c60580 R09: 0000000000000001
+[  476.883888] R10: 6e65706f203a7261 R11: 7261686364736561 R12: ffff95c5f6d58b50
+[  476.883909] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  476.883910] FS:  00007faae3aac580(0000) GS:ffff95c657c40000(0000) knlGS:0000000000000000
+[  476.883911] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  476.883913] CR2: 0000000000000000 CR3: 00000001dfc62002 CR4: 00000000000306e0
+[  476.883915] Call Trace:
+[  476.883916]  <TASK>
+[  476.883918]  ? show_regs.cold+0x1a/0x1f
+[  476.883921]  ? __die_body+0x20/0x70
+[  476.883924]  ? __die+0x2b/0x37
+[  476.883926]  ? page_fault_oops+0x136/0x2c0
+[  476.883928]  ? search_bpf_extables+0x63/0x80
+[  476.883932]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.883934]  ? search_exception_tables+0x5f/0x70
+[  476.883936]  ? kernelmode_fixup_or_oops+0xa2/0x120
+[  476.883938]  ? __bad_area_nosemaphore+0x15d/0x1a0
+[  476.883940]  ? __bad_area+0x56/0x80
+[  476.883942]  ? bad_area+0x16/0x20
+[  476.883943]  ? do_user_addr_fault+0x39e/0x660
+[  476.883945]  ? exc_page_fault+0x77/0x170
+[  476.883948]  ? asm_exc_page_fault+0x27/0x30
+[  476.883950]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.883952]  aesd_read+0x55/0xbc [aesdchar]
+[  476.883955]  vfs_read+0xa0/0x1a0
+[  476.883957]  ksys_read+0x67/0xf0
+[  476.883960]  __x64_sys_read+0x1a/0x20
+[  476.883962]  do_syscall_64+0x5c/0xc0
+[  476.883964]  ? irqentry_exit_to_user_mode+0x17/0x20
+[  476.883966]  ? irqentry_exit+0x1d/0x30
+[  476.883968]  ? exc_page_fault+0x89/0x170
+[  476.883970]  entry_SYSCALL_64_after_hwframe+0x62/0xcc
+[  476.883972] RIP: 0033:0x7faae39c6fd2
+[  476.883993] Code: c0 e9 c2 fe ff ff 50 48 8d 3d aa cb 0a 00 e8 d5 1a 02 00 0f 1f 44 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 ec 28 48 89 54 24
+[  476.883995] RSP: 002b:00007ffff475b1c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[  476.883997] RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007faae39c6fd2
+[  476.883998] RDX: 0000000000020000 RSI: 00007faae3328000 RDI: 0000000000000003
+[  476.884000] RBP: 00007faae3328000 R08: 00007faae3327010 R09: 0000000000000000
+[  476.884001] R10: 0000000000000022 R11: 0000000000000246 R12: 0000558fc70181f0
+[  476.884003] R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
+[  476.884005]  </TASK>
+[  476.884006] Modules linked in: aesdchar(OE) isofs xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xfrm_user xfrm_algo iptable_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 libcrc32c xt_addrtype iptable_filter bpfilter br_netfilter bridge stp llc aufs overlay nls_iso8859_1 binfmt_misc snd_intel8x0 snd_ac97_codec ac97_bus intel_rapl_msr snd_pcm intel_rapl_common snd_seq_midi snd_seq_midi_event snd_rawmidi vmwgfx crct10dif_pclmul snd_seq ghash_clmulni_intel ttm snd_seq_device drm_kms_helper aesni_intel snd_timer cec rc_core snd fb_sys_fops soundcore syscopyarea sysfillrect crypto_simd joydev sysimgblt cryptd input_leds vboxguest(OE) serio_raw mac_hid rapl sch_fq_codel msr parport_pc ppdev lp pstore_blk parport ramoops pstore_zone drm reed_solomon efi_pstore ip_tables x_tables autofs4 hid_generic ahci usbhid crc32_pclmul psmouse i2c_piix4 hid libahci e1000 pata_acpi video
+[  476.884118] CR2: 0000000000000000
+[  476.884245] ---[ end trace e358791d9fd4830c ]---
+[  476.884248] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.884251] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  476.884253] RSP: 0018:ffffb57c03887df8 EFLAGS: 00010202
+[  476.884254] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000027
+[  476.884255] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  476.884278] RBP: ffffb57c03887e30 R08: ffff95c657d20580 R09: 0000000000000001
+[  476.884279] R10: 302074657366666f R11: 2074657366666f20 R12: ffff95c5f6d58b40
+[  476.884280] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  476.884281] FS:  00007faae3aac580(0000) GS:ffff95c657c40000(0000) knlGS:0000000000000000
+[  476.884282] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  476.884283] CR2: 0000000000000000 CR3: 00000001dfc62002 CR4: 00000000000306e0
+[  476.884331] aesdchar: release
+[  476.921285] aesdchar: open
+[  476.921297] aesdchar: write 1 bytes with offset 0
+[  476.921302] aesdchar: release
+[  476.921308] aesdchar: open
+[  476.921311] aesdchar: write 1 bytes with offset 0
+[  476.921313] aesdchar: release
+[  476.921316] aesdchar: open
+[  476.921320] aesdchar: write 2 bytes with offset 0
+[  476.921321] aesdchar: release
+[  476.921325] aesdchar: open
+[  476.921328] aesdchar: write 3 bytes with offset 0
+[  476.921330] aesdchar: release
+[  476.921334] aesdchar: open
+[  476.921337] aesdchar: write 7 bytes with offset 0
+[  476.921339] aesdchar: release
+[  476.921342] aesdchar: open
+[  476.921345] aesdchar: write 7 bytes with offset 0
+[  476.921347] aesdchar: release
+[  476.921350] aesdchar: open
+[  476.921353] aesdchar: write 7 bytes with offset 0
+[  476.921355] aesdchar: release
+[  476.921358] aesdchar: open
+[  476.921361] aesdchar: write 7 bytes with offset 0
+[  476.921363] aesdchar: release
+[  476.921366] aesdchar: open
+[  476.921369] aesdchar: write 7 bytes with offset 0
+[  476.921370] aesdchar: release
+[  476.921373] aesdchar: open
+[  476.921377] aesdchar: write 7 bytes with offset 0
+[  476.921379] aesdchar: release
+[  476.921382] aesdchar: open
+[  476.921385] aesdchar: write 7 bytes with offset 0
+[  476.921387] aesdchar: release
+[  476.921391] aesdchar: open
+[  476.921394] aesdchar: write 7 bytes with offset 0
+[  476.921396] aesdchar: release
+[  476.921399] aesdchar: open
+[  476.921402] aesdchar: write 2 bytes with offset 0
+[  476.921404] aesdchar: release
+[  476.921445] aesdchar: open
+[  476.921450] aesdchar: write 2 bytes with offset 0
+[  476.921452] aesdchar: release
+[  476.921456] aesdchar: open
+[  476.921459] aesdchar: write 4 bytes with offset 0
+[  476.921461] aesdchar: release
+[  476.925670] aesdchar: open
+[  476.925680] aesdchar: read 131072 bytes with offset 0
+[  476.925687] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  476.925689] #PF: supervisor write access in kernel mode
+[  476.925691] #PF: error_code(0x0002) - not-present page
+[  476.925692] PGD 0 P4D 0 
+[  476.925694] Oops: 0002 [#3] SMP PTI
+[  476.925697] CPU: 4 PID: 4323 Comm: cat Tainted: G      D    OE     5.15.0-87-generic #97~20.04.1-Ubuntu
+[  476.925728] Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+[  476.925730] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.925734] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  476.925736] RSP: 0018:ffffb57c038d7d38 EFLAGS: 00010202
+[  476.925738] RAX: 0000000000000000 RBX: 0000000000000006 RCX: 0000000000000027
+[  476.925739] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  476.925740] RBP: ffffb57c038d7d70 R08: ffff95c657d20580 R09: 0000000000000001
+[  476.925741] R10: 6e65706f203a7261 R11: 7261686364736561 R12: ffff95c5f6d58ba0
+[  476.925742] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  476.925744] FS:  00007f4a58c34580(0000) GS:ffff95c657d00000(0000) knlGS:0000000000000000
+[  476.925745] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  476.925746] CR2: 0000000000000000 CR3: 00000001dfd38004 CR4: 00000000000306e0
+[  476.925748] Call Trace:
+[  476.925750]  <TASK>
+[  476.925752]  ? show_regs.cold+0x1a/0x1f
+[  476.925755]  ? __die_body+0x20/0x70
+[  476.925759]  ? __die+0x2b/0x37
+[  476.925760]  ? page_fault_oops+0x136/0x2c0
+[  476.925762]  ? search_bpf_extables+0x63/0x80
+[  476.925765]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.925767]  ? search_exception_tables+0x5f/0x70
+[  476.925770]  ? kernelmode_fixup_or_oops+0xa2/0x120
+[  476.925772]  ? __bad_area_nosemaphore+0x15d/0x1a0
+[  476.925773]  ? __bad_area+0x56/0x80
+[  476.925775]  ? bad_area+0x16/0x20
+[  476.925776]  ? do_user_addr_fault+0x39e/0x660
+[  476.925778]  ? exc_page_fault+0x77/0x170
+[  476.925782]  ? asm_exc_page_fault+0x27/0x30
+[  476.925784]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.925786]  aesd_read+0x55/0xbc [aesdchar]
+[  476.925788]  vfs_read+0xa0/0x1a0
+[  476.925791]  ksys_read+0x67/0xf0
+[  476.925794]  __x64_sys_read+0x1a/0x20
+[  476.925819]  do_syscall_64+0x5c/0xc0
+[  476.925821]  ? handle_mm_fault+0xd8/0x2c0
+[  476.925862]  ? exit_to_user_mode_prepare+0x3d/0x1c0
+[  476.925918]  ? do_user_addr_fault+0x1e0/0x660
+[  476.925920]  ? irqentry_exit_to_user_mode+0x17/0x20
+[  476.925922]  ? irqentry_exit+0x1d/0x30
+[  476.925924]  ? exc_page_fault+0x89/0x170
+[  476.925927]  entry_SYSCALL_64_after_hwframe+0x62/0xcc
+[  476.925928] RIP: 0033:0x7f4a58b4efd2
+[  476.925930] Code: c0 e9 c2 fe ff ff 50 48 8d 3d aa cb 0a 00 e8 d5 1a 02 00 0f 1f 44 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 ec 28 48 89 54 24
+[  476.925932] RSP: 002b:00007ffddcee5018 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[  476.925934] RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007f4a58b4efd2
+[  476.925935] RDX: 0000000000020000 RSI: 00007f4a584b0000 RDI: 0000000000000003
+[  476.925936] RBP: 00007f4a584b0000 R08: 00007f4a584af010 R09: 0000000000000000
+[  476.925937] R10: 0000000000000022 R11: 0000000000000246 R12: 00005630e5acd1f0
+[  476.925939] R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
+[  476.925940]  </TASK>
+[  476.925941] Modules linked in: aesdchar(OE) isofs xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xfrm_user xfrm_algo iptable_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 libcrc32c xt_addrtype iptable_filter bpfilter br_netfilter bridge stp llc aufs overlay nls_iso8859_1 binfmt_misc snd_intel8x0 snd_ac97_codec ac97_bus intel_rapl_msr snd_pcm intel_rapl_common snd_seq_midi snd_seq_midi_event snd_rawmidi vmwgfx crct10dif_pclmul snd_seq ghash_clmulni_intel ttm snd_seq_device drm_kms_helper aesni_intel snd_timer cec rc_core snd fb_sys_fops soundcore syscopyarea sysfillrect crypto_simd joydev sysimgblt cryptd input_leds vboxguest(OE) serio_raw mac_hid rapl sch_fq_codel msr parport_pc ppdev lp pstore_blk parport ramoops pstore_zone drm reed_solomon efi_pstore ip_tables x_tables autofs4 hid_generic ahci usbhid crc32_pclmul psmouse i2c_piix4 hid libahci e1000 pata_acpi video
+[  476.925988] CR2: 0000000000000000
+[  476.926011] ---[ end trace e358791d9fd4830d ]---
+[  476.926012] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  476.926015] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  476.926017] RSP: 0018:ffffb57c03887df8 EFLAGS: 00010202
+[  476.926018] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000027
+[  476.926020] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  476.926021] RBP: ffffb57c03887e30 R08: ffff95c657d20580 R09: 0000000000000001
+[  476.926022] R10: 302074657366666f R11: 2074657366666f20 R12: ffff95c5f6d58b40
+[  476.926023] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  476.926024] FS:  00007f4a58c34580(0000) GS:ffff95c657d00000(0000) knlGS:0000000000000000
+[  476.926025] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  476.926047] CR2: 0000000000000000 CR3: 00000001dfd38004 CR4: 00000000000306e0
+[  476.926095] aesdchar: release
+[  514.567534] aesdchar: open
+[  514.567548] aesdchar: write 7 bytes with offset 0
+[  514.567553] aesdchar: release
+[  514.567575] aesdchar: open
+[  514.567579] aesdchar: write 7 bytes with offset 0
+[  514.567581] aesdchar: release
+[  514.567585] aesdchar: open
+[  514.567588] aesdchar: write 7 bytes with offset 0
+[  514.567590] aesdchar: release
+[  514.567593] aesdchar: open
+[  514.567596] aesdchar: write 7 bytes with offset 0
+[  514.567597] aesdchar: release
+[  514.567600] aesdchar: open
+[  514.567604] aesdchar: write 7 bytes with offset 0
+[  514.567635] aesdchar: release
+[  514.567643] aesdchar: open
+[  514.567648] aesdchar: write 7 bytes with offset 0
+[  514.567650] aesdchar: release
+[  514.567654] aesdchar: open
+[  514.567657] aesdchar: write 7 bytes with offset 0
+[  514.567659] aesdchar: release
+[  514.567663] aesdchar: open
+[  514.567666] aesdchar: write 7 bytes with offset 0
+[  514.567667] aesdchar: release
+[  514.567670] aesdchar: open
+[  514.567674] aesdchar: write 7 bytes with offset 0
+[  514.567675] aesdchar: release
+[  514.567679] aesdchar: open
+[  514.567682] aesdchar: write 8 bytes with offset 0
+[  514.567683] aesdchar: release
+[  514.573285] aesdchar: open
+[  514.573298] aesdchar: read 131072 bytes with offset 0
+[  514.573308] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  514.573310] #PF: supervisor write access in kernel mode
+[  514.573313] #PF: error_code(0x0002) - not-present page
+[  514.573314] PGD 0 P4D 0 
+[  514.573317] Oops: 0002 [#4] SMP PTI
+[  514.573320] CPU: 1 PID: 4372 Comm: cat Tainted: G      D    OE     5.15.0-87-generic #97~20.04.1-Ubuntu
+[  514.573322] Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+[  514.573324] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.573329] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  514.573332] RSP: 0018:ffffb57c0399fda8 EFLAGS: 00010202
+[  514.573334] RAX: 0000000000000000 RBX: 0000000000000006 RCX: 0000000000000027
+[  514.573336] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  514.573338] RBP: ffffb57c0399fde0 R08: ffff95c657c60580 R09: 0000000000000001
+[  514.573339] R10: 6e65706f203a7261 R11: 7261686364736561 R12: ffff95c5f6d58ba0
+[  514.573340] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  514.573342] FS:  00007fd157e7e580(0000) GS:ffff95c657c40000(0000) knlGS:0000000000000000
+[  514.573343] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  514.573345] CR2: 0000000000000000 CR3: 00000001ddd28002 CR4: 00000000000306e0
+[  514.573347] Call Trace:
+[  514.573349]  <TASK>
+[  514.573351]  ? show_regs.cold+0x1a/0x1f
+[  514.573355]  ? __die_body+0x20/0x70
+[  514.573359]  ? __die+0x2b/0x37
+[  514.573361]  ? page_fault_oops+0x136/0x2c0
+[  514.573363]  ? search_bpf_extables+0x63/0x80
+[  514.573366]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.573369]  ? search_exception_tables+0x5f/0x70
+[  514.573406]  ? kernelmode_fixup_or_oops+0xa2/0x120
+[  514.573408]  ? __bad_area_nosemaphore+0x15d/0x1a0
+[  514.573435]  ? __bad_area+0x56/0x80
+[  514.573437]  ? bad_area+0x16/0x20
+[  514.573440]  ? do_user_addr_fault+0x39e/0x660
+[  514.573443]  ? exc_page_fault+0x77/0x170
+[  514.573448]  ? asm_exc_page_fault+0x27/0x30
+[  514.573451]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.573454]  aesd_read+0x55/0xbc [aesdchar]
+[  514.573456]  vfs_read+0xa0/0x1a0
+[  514.573459]  ksys_read+0x67/0xf0
+[  514.573462]  __x64_sys_read+0x1a/0x20
+[  514.573464]  do_syscall_64+0x5c/0xc0
+[  514.573466]  ? do_user_addr_fault+0x1e0/0x660
+[  514.573468]  ? irqentry_exit_to_user_mode+0x17/0x20
+[  514.573470]  ? irqentry_exit+0x1d/0x30
+[  514.573472]  ? exc_page_fault+0x89/0x170
+[  514.573474]  entry_SYSCALL_64_after_hwframe+0x62/0xcc
+[  514.573476] RIP: 0033:0x7fd157d98fd2
+[  514.573478] Code: c0 e9 c2 fe ff ff 50 48 8d 3d aa cb 0a 00 e8 d5 1a 02 00 0f 1f 44 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 ec 28 48 89 54 24
+[  514.573480] RSP: 002b:00007ffea6b7e6e8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[  514.573482] RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007fd157d98fd2
+[  514.573483] RDX: 0000000000020000 RSI: 00007fd1576fa000 RDI: 0000000000000003
+[  514.573485] RBP: 00007fd1576fa000 R08: 00007fd1576f9010 R09: 0000000000000000
+[  514.573486] R10: 0000000000000022 R11: 0000000000000246 R12: 000055918f4231f0
+[  514.573487] R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
+[  514.573488]  </TASK>
+[  514.573489] Modules linked in: aesdchar(OE) isofs xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xfrm_user xfrm_algo iptable_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 libcrc32c xt_addrtype iptable_filter bpfilter br_netfilter bridge stp llc aufs overlay nls_iso8859_1 binfmt_misc snd_intel8x0 snd_ac97_codec ac97_bus intel_rapl_msr snd_pcm intel_rapl_common snd_seq_midi snd_seq_midi_event snd_rawmidi vmwgfx crct10dif_pclmul snd_seq ghash_clmulni_intel ttm snd_seq_device drm_kms_helper aesni_intel snd_timer cec rc_core snd fb_sys_fops soundcore syscopyarea sysfillrect crypto_simd joydev sysimgblt cryptd input_leds vboxguest(OE) serio_raw mac_hid rapl sch_fq_codel msr parport_pc ppdev lp pstore_blk parport ramoops pstore_zone drm reed_solomon efi_pstore ip_tables x_tables autofs4 hid_generic ahci usbhid crc32_pclmul psmouse i2c_piix4 hid libahci e1000 pata_acpi video
+[  514.573549] CR2: 0000000000000000
+[  514.573550] ---[ end trace e358791d9fd4830e ]---
+[  514.573552] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.573554] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  514.573556] RSP: 0018:ffffb57c03887df8 EFLAGS: 00010202
+[  514.573557] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000027
+[  514.573559] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  514.573560] RBP: ffffb57c03887e30 R08: ffff95c657d20580 R09: 0000000000000001
+[  514.573561] R10: 302074657366666f R11: 2074657366666f20 R12: ffff95c5f6d58b40
+[  514.573562] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  514.573563] FS:  00007fd157e7e580(0000) GS:ffff95c657c40000(0000) knlGS:0000000000000000
+[  514.573564] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  514.573566] CR2: 0000000000000000 CR3: 00000001ddd28002 CR4: 00000000000306e0
+[  514.573632] aesdchar: release
+[  514.593027] aesdchar: open
+[  514.593038] aesdchar: write 8 bytes with offset 0
+[  514.593043] aesdchar: release
+[  514.600284] aesdchar: open
+[  514.600295] aesdchar: read 131072 bytes with offset 0
+[  514.600302] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  514.600333] #PF: supervisor write access in kernel mode
+[  514.600335] #PF: error_code(0x0002) - not-present page
+[  514.600336] PGD 0 P4D 0 
+[  514.600339] Oops: 0002 [#5] SMP PTI
+[  514.600342] CPU: 0 PID: 4384 Comm: cat Tainted: G      D    OE     5.15.0-87-generic #97~20.04.1-Ubuntu
+[  514.600365] Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+[  514.600367] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.600371] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  514.600373] RSP: 0018:ffffb57c039d7d38 EFLAGS: 00010202
+[  514.600375] RAX: 0000000000000000 RBX: 0000000000000007 RCX: 0000000000000027
+[  514.600376] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  514.600378] RBP: ffffb57c039d7d70 R08: ffff95c657c20580 R09: 0000000000000001
+[  514.600379] R10: 6e65706f203a7261 R11: 7261686364736561 R12: ffff95c5f6d58bb0
+[  514.600380] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  514.600381] FS:  00007ff2ba627580(0000) GS:ffff95c657c00000(0000) knlGS:0000000000000000
+[  514.600383] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  514.600385] CR2: 0000000000000000 CR3: 00000001e903a002 CR4: 00000000000306f0
+[  514.600387] Call Trace:
+[  514.600388]  <TASK>
+[  514.600390]  ? show_regs.cold+0x1a/0x1f
+[  514.600393]  ? __die_body+0x20/0x70
+[  514.600397]  ? __die+0x2b/0x37
+[  514.600398]  ? page_fault_oops+0x136/0x2c0
+[  514.600400]  ? search_bpf_extables+0x63/0x80
+[  514.600403]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.600405]  ? search_exception_tables+0x5f/0x70
+[  514.600408]  ? kernelmode_fixup_or_oops+0xa2/0x120
+[  514.600409]  ? __bad_area_nosemaphore+0x15d/0x1a0
+[  514.600411]  ? __bad_area+0x56/0x80
+[  514.600413]  ? bad_area+0x16/0x20
+[  514.600415]  ? do_user_addr_fault+0x39e/0x660
+[  514.600417]  ? exc_page_fault+0x77/0x170
+[  514.600420]  ? asm_exc_page_fault+0x27/0x30
+[  514.600422]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.600425]  aesd_read+0x55/0xbc [aesdchar]
+[  514.600427]  vfs_read+0xa0/0x1a0
+[  514.600430]  ksys_read+0x67/0xf0
+[  514.600433]  __x64_sys_read+0x1a/0x20
+[  514.600435]  do_syscall_64+0x5c/0xc0
+[  514.600437]  ? handle_mm_fault+0xd8/0x2c0
+[  514.600439]  ? exit_to_user_mode_prepare+0x3d/0x1c0
+[  514.600442]  ? do_user_addr_fault+0x1e0/0x660
+[  514.600443]  ? irqentry_exit_to_user_mode+0x17/0x20
+[  514.600446]  ? irqentry_exit+0x1d/0x30
+[  514.600448]  ? exc_page_fault+0x89/0x170
+[  514.600450]  entry_SYSCALL_64_after_hwframe+0x62/0xcc
+[  514.600452] RIP: 0033:0x7ff2ba541fd2
+[  514.600476] Code: c0 e9 c2 fe ff ff 50 48 8d 3d aa cb 0a 00 e8 d5 1a 02 00 0f 1f 44 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 ec 28 48 89 54 24
+[  514.600477] RSP: 002b:00007fff8c0dcfe8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[  514.600479] RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007ff2ba541fd2
+[  514.600481] RDX: 0000000000020000 RSI: 00007ff2b9ea3000 RDI: 0000000000000003
+[  514.600482] RBP: 00007ff2b9ea3000 R08: 00007ff2b9ea2010 R09: 0000000000000000
+[  514.600483] R10: 0000000000000022 R11: 0000000000000246 R12: 000055cb7e16e1f0
+[  514.600484] R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
+[  514.600486]  </TASK>
+[  514.600487] Modules linked in: aesdchar(OE) isofs xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xfrm_user xfrm_algo iptable_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 libcrc32c xt_addrtype iptable_filter bpfilter br_netfilter bridge stp llc aufs overlay nls_iso8859_1 binfmt_misc snd_intel8x0 snd_ac97_codec ac97_bus intel_rapl_msr snd_pcm intel_rapl_common snd_seq_midi snd_seq_midi_event snd_rawmidi vmwgfx crct10dif_pclmul snd_seq ghash_clmulni_intel ttm snd_seq_device drm_kms_helper aesni_intel snd_timer cec rc_core snd fb_sys_fops soundcore syscopyarea sysfillrect crypto_simd joydev sysimgblt cryptd input_leds vboxguest(OE) serio_raw mac_hid rapl sch_fq_codel msr parport_pc ppdev lp pstore_blk parport ramoops pstore_zone drm reed_solomon efi_pstore ip_tables x_tables autofs4 hid_generic ahci usbhid crc32_pclmul psmouse i2c_piix4 hid libahci e1000 pata_acpi video
+[  514.600576] CR2: 0000000000000000
+[  514.600578] ---[ end trace e358791d9fd4830f ]---
+[  514.600580] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.600584] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  514.600586] RSP: 0018:ffffb57c03887df8 EFLAGS: 00010202
+[  514.600611] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000027
+[  514.600635] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  514.600637] RBP: ffffb57c03887e30 R08: ffff95c657d20580 R09: 0000000000000001
+[  514.600638] R10: 302074657366666f R11: 2074657366666f20 R12: ffff95c5f6d58b40
+[  514.600639] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  514.600640] FS:  00007ff2ba627580(0000) GS:ffff95c657c00000(0000) knlGS:0000000000000000
+[  514.600642] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  514.600644] CR2: 0000000000000000 CR3: 00000001e903a002 CR4: 00000000000306f0
+[  514.600695] aesdchar: release
+[  514.624365] aesdchar: open
+[  514.624381] aesdchar: write 1 bytes with offset 0
+[  514.624387] aesdchar: release
+[  514.624393] aesdchar: open
+[  514.624398] aesdchar: write 1 bytes with offset 0
+[  514.624400] aesdchar: release
+[  514.624404] aesdchar: open
+[  514.624408] aesdchar: write 2 bytes with offset 0
+[  514.624410] aesdchar: release
+[  514.624414] aesdchar: open
+[  514.624418] aesdchar: write 3 bytes with offset 0
+[  514.624420] aesdchar: release
+[  514.624424] aesdchar: open
+[  514.624428] aesdchar: write 7 bytes with offset 0
+[  514.624430] aesdchar: release
+[  514.624434] aesdchar: open
+[  514.624438] aesdchar: write 7 bytes with offset 0
+[  514.624440] aesdchar: release
+[  514.624444] aesdchar: open
+[  514.624447] aesdchar: write 7 bytes with offset 0
+[  514.624449] aesdchar: release
+[  514.624453] aesdchar: open
+[  514.624457] aesdchar: write 7 bytes with offset 0
+[  514.624459] aesdchar: release
+[  514.624507] aesdchar: open
+[  514.624514] aesdchar: write 7 bytes with offset 0
+[  514.624517] aesdchar: release
+[  514.624521] aesdchar: open
+[  514.624526] aesdchar: write 7 bytes with offset 0
+[  514.624528] aesdchar: release
+[  514.624532] aesdchar: open
+[  514.624536] aesdchar: write 7 bytes with offset 0
+[  514.624537] aesdchar: release
+[  514.624542] aesdchar: open
+[  514.624546] aesdchar: write 7 bytes with offset 0
+[  514.624548] aesdchar: release
+[  514.624552] aesdchar: open
+[  514.624556] aesdchar: write 2 bytes with offset 0
+[  514.624558] aesdchar: release
+[  514.624561] aesdchar: open
+[  514.624565] aesdchar: write 2 bytes with offset 0
+[  514.624567] aesdchar: release
+[  514.624572] aesdchar: open
+[  514.624576] aesdchar: write 4 bytes with offset 0
+[  514.624577] aesdchar: release
+[  514.629632] aesdchar: open
+[  514.629656] aesdchar: read 131072 bytes with offset 0
+[  514.629667] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  514.629670] #PF: supervisor write access in kernel mode
+[  514.629673] #PF: error_code(0x0002) - not-present page
+[  514.629675] PGD 0 P4D 0 
+[  514.629680] Oops: 0002 [#6] SMP PTI
+[  514.629684] CPU: 1 PID: 4390 Comm: cat Tainted: G      D    OE     5.15.0-87-generic #97~20.04.1-Ubuntu
+[  514.629689] Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+[  514.629691] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.629813] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  514.629815] RSP: 0018:ffffb57c039efe08 EFLAGS: 00010202
+[  514.629819] RAX: 0000000000000000 RBX: 0000000000000002 RCX: 0000000000000027
+[  514.629821] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  514.629823] RBP: ffffb57c039efe40 R08: ffff95c657c60580 R09: 0000000000000001
+[  514.629825] R10: 6e65706f203a7261 R11: 7261686364736561 R12: ffff95c5f6d58b60
+[  514.629827] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  514.629873] FS:  00007f52123b2580(0000) GS:ffff95c657c40000(0000) knlGS:0000000000000000
+[  514.629876] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  514.629878] CR2: 0000000000000000 CR3: 00000001e906e004 CR4: 00000000000306e0
+[  514.629881] Call Trace:
+[  514.629886]  <TASK>
+[  514.629890]  ? show_regs.cold+0x1a/0x1f
+[  514.629899]  ? __die_body+0x20/0x70
+[  514.629907]  ? __die+0x2b/0x37
+[  514.629942]  ? page_fault_oops+0x136/0x2c0
+[  514.629948]  ? search_bpf_extables+0x63/0x80
+[  514.629952]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.629956]  ? search_exception_tables+0x5f/0x70
+[  514.629960]  ? kernelmode_fixup_or_oops+0xa2/0x120
+[  514.629963]  ? __bad_area_nosemaphore+0x15d/0x1a0
+[  514.629966]  ? __bad_area+0x56/0x80
+[  514.629969]  ? bad_area+0x16/0x20
+[  514.629971]  ? do_user_addr_fault+0x39e/0x660
+[  514.629975]  ? exc_page_fault+0x77/0x170
+[  514.629982]  ? asm_exc_page_fault+0x27/0x30
+[  514.629987]  ? aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.629991]  aesd_read+0x55/0xbc [aesdchar]
+[  514.630008]  vfs_read+0xa0/0x1a0
+[  514.630015]  ksys_read+0x67/0xf0
+[  514.630020]  __x64_sys_read+0x1a/0x20
+[  514.630024]  do_syscall_64+0x5c/0xc0
+[  514.630027]  entry_SYSCALL_64_after_hwframe+0x62/0xcc
+[  514.630030] RIP: 0033:0x7f52122ccfd2
+[  514.630035] Code: c0 e9 c2 fe ff ff 50 48 8d 3d aa cb 0a 00 e8 d5 1a 02 00 0f 1f 44 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 ec 28 48 89 54 24
+[  514.630037] RSP: 002b:00007ffe2d6cf818 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[  514.630040] RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007f52122ccfd2
+[  514.630042] RDX: 0000000000020000 RSI: 00007f5211c2e000 RDI: 0000000000000003
+[  514.630044] RBP: 00007f5211c2e000 R08: 00007f5211c2d010 R09: 0000000000000000
+[  514.630046] R10: 0000000000000022 R11: 0000000000000246 R12: 000055efed42c1f0
+[  514.630048] R13: 0000000000000003 R14: 0000000000020000 R15: 0000000000020000
+[  514.630051]  </TASK>
+[  514.630053] Modules linked in: aesdchar(OE) isofs xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xfrm_user xfrm_algo iptable_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 libcrc32c xt_addrtype iptable_filter bpfilter br_netfilter bridge stp llc aufs overlay nls_iso8859_1 binfmt_misc snd_intel8x0 snd_ac97_codec ac97_bus intel_rapl_msr snd_pcm intel_rapl_common snd_seq_midi snd_seq_midi_event snd_rawmidi vmwgfx crct10dif_pclmul snd_seq ghash_clmulni_intel ttm snd_seq_device drm_kms_helper aesni_intel snd_timer cec rc_core snd fb_sys_fops soundcore syscopyarea sysfillrect crypto_simd joydev sysimgblt cryptd input_leds vboxguest(OE) serio_raw mac_hid rapl sch_fq_codel msr parport_pc ppdev lp pstore_blk parport ramoops pstore_zone drm reed_solomon efi_pstore ip_tables x_tables autofs4 hid_generic ahci usbhid crc32_pclmul psmouse i2c_piix4 hid libahci e1000 pata_acpi video
+[  514.630139] CR2: 0000000000000000
+[  514.630810] ---[ end trace e358791d9fd48310 ]---
+[  514.630814] RIP: 0010:aesd_circular_buffer_find_entry_offset_for_fpos+0xd2/0x105 [aesdchar]
+[  514.630820] Code: cc cc cc cc 48 89 c6 48 c7 c7 c0 60 94 c0 e8 35 a5 f3 c5 eb 9a 48 89 c6 48 c7 c7 a0 60 94 c0 e8 24 a5 f3 c5 eb a6 48 8b 45 c8 <4c> 89 30 48 63 c3 48 83 f8 0a 77 05 4c 89 e0 eb b6 48 89 c6 48 c7
+[  514.630823] RSP: 0018:ffffb57c03887df8 EFLAGS: 00010202
+[  514.630828] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000027
+[  514.630830] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff95c5f6d58b40
+[  514.630832] RBP: ffffb57c03887e30 R08: ffff95c657d20580 R09: 0000000000000001
+[  514.630834] R10: 302074657366666f R11: 2074657366666f20 R12: ffff95c5f6d58b40
+[  514.630836] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000007
+[  514.630838] FS:  00007f52123b2580(0000) GS:ffff95c657c40000(0000) knlGS:0000000000000000
+[  514.630841] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  514.630843] CR2: 0000000000000000 CR3: 00000001e906e004 CR4: 00000000000306e0
