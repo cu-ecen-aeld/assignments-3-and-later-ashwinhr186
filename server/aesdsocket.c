@@ -18,6 +18,7 @@
 #include <pthread.h>
 #include <sys/queue.h>
 #include <sys/time.h>
+#include <bool.h>
 
 #define PORT "9000"
 #define BACKLOG 10
