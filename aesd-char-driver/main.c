@@ -86,6 +86,8 @@ ssize_t aesd_write(struct file *filp, const char __user *buf, size_t count,
     char* temp_buffptr = kmalloc(count, GFP_KERNEL);
     copy_from_user(temp_buffptr, buf, count);
     PDEBUG("temp_buffptr: %s", temp_buffptr);
+
+
     if(strchr(temp_buffptr, '\n') == NULL) {
         final_buffptr = krealloc(final_buffptr, final_count + count, GFP_KERNEL);
         memcpy(final_buffptr + final_count, temp_buffptr, count);
@@ -124,7 +126,7 @@ ssize_t aesd_write(struct file *filp, const char __user *buf, size_t count,
             PDEBUG("overwritten_buffptr: %s", overwritten_buffptr);
             kfree(overwritten_buffptr);
         }
-        retval = count;
+        retval = final_count;
         final_count = 0;
     }
     return retval;
@@ -167,6 +169,7 @@ int aesd_init_module(void)
     /**
      * TODO: initialize the AESD specific portion of the device
      */
+    PDEBUG("Initializing AESD char driver");
     struct aesd_circular_buffer* buffer = kmalloc(sizeof(struct aesd_circular_buffer), GFP_KERNEL);
     aesd_device.command_buffer = buffer;
     mutex_init(&aesd_device.write_lock);
