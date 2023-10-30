@@ -18,7 +18,6 @@
 #include <pthread.h>
 #include <sys/queue.h>
 #include <sys/time.h>
-#include <bool.h>
 
 #define PORT "9000"
 #define BACKLOG 10
@@ -54,7 +53,7 @@ typedef struct thread_data {
     int newsockfd;
     struct sockaddr_storage clientaddr;
     pthread_mutex_t mutex;
-    bool thread_complete_success;
+    int thread_complete_success;
 }thread_data_t;
 
 
@@ -119,7 +118,7 @@ void* thread_socket(void* thread_param) {
     close(thread_func_param->newsockfd);
     close(fd);
     syslog(LOG_INFO, "Closed connection from %s\n", s);
-    thread_func_param->thread_complete_success = true;
+    thread_func_param->thread_complete_success = 1;
     return thread_func_param;
     //pthread_exit(NULL);
 }
@@ -327,7 +326,7 @@ int main(int argc, char *argv[]) {
         }
         datap->thread_params.newsockfd = newsockfd;
         datap->thread_params.clientaddr = clientaddr;
-        datap->thread_params.thread_complete_success = false;
+        datap->thread_params.thread_complete_success = 0;
         datap->thread_params.mutex = mutex;
 
         pthread_create(&(datap->thread_params.thread_id), NULL, thread_socket, &datap->thread_params);
@@ -335,7 +334,7 @@ int main(int argc, char *argv[]) {
 
         /*Check if any thread has completed*/
         SLIST_FOREACH(datap, &head, entries) {
-            if(datap->thread_params.thread_complete_success == true) {
+            if(datap->thread_params.thread_complete_success == 1) {
                 int ret = pthread_join(datap->thread_params.thread_id, NULL);
                 if(ret != 0) {
                     perror("pthread_join");
