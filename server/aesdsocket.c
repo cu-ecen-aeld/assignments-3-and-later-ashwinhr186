@@ -1,31 +1,42 @@
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <errno.h>
-#include <syslog.h>
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
 #include <unistd.h>
-#include <arpa/inet.h>
+#include <string.h>
+#include <signal.h>
+#include <syslog.h>
+#include <sys/types.h>
+#include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <errno.h>
+#include <netdb.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <linux/fs.h>
 #include <pthread.h>
-#include <stdbool.h>
-#include "includes/queue.h"
-#include <time.h>
+#include <sys/queue.h>
+#include <sys/time.h>
 
 #define PORT "9000"
 #define BACKLOG 10
 #define BUF_LEN 1024
 #define TIMESTAMP_STRING_LENGTH 100
 
-char *pathname = "/var/tmp/aesdsocketdata";
+#define USE_AESD_CHAR_DEVICE 1
+
+#ifdef USE_AESD_CHAR_DEVICE
+    #define PATHNAME "/dev/aesdchar"
+#else
+    #define PATHNAME "/var/tmp/aesdsocketdata"
+#endif
+
 int sockfd;
 int fd;
 pthread_mutex_t mutex;
 
+#ifndef USE_AESD_CHAR_DEVICE
 /*Structure for timer thread*/
 typedef struct {
     pthread_t thread_id;
@@ -34,6 +45,7 @@ typedef struct {
 }timestamp_t;
 
 timestamp_t timestamp;
+#endif
 
 /*structure for thread*/
 typedef struct thread_data {
@@ -41,8 +53,9 @@ typedef struct thread_data {
     int newsockfd;
     struct sockaddr_storage clientaddr;
     pthread_mutex_t mutex;
-    bool thread_complete_success;
+    int thread_complete_success;
 }thread_data_t;
+
 
 /*structure for slist nodes*/
 typedef struct slist_data_s {
@@ -70,7 +83,7 @@ void* thread_socket(void* thread_param) {
 
     char buf[BUF_LEN];
     char transmit_buffer[BUF_LEN];
-    int fd = open(pathname, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
+    int fd = open(PATHNAME, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
     thread_data_t *thread_func_param = (thread_data_t *)thread_param;
     struct sockaddr_storage clientaddr = thread_func_param->clientaddr;
     char s[INET6_ADDRSTRLEN];
@@ -84,25 +97,28 @@ void* thread_socket(void* thread_param) {
             perror("recv");
             exit(EXIT_FAILURE);
         }
+        #ifndef USE_AESD_CHAR_DEVICE
         pthread_mutex_lock(&thread_func_param->mutex);
+        #endif
         write(fd, buf, recv_bytes);
+        #ifndef USE_AESD_CHAR_DEVICE
         pthread_mutex_unlock(&thread_func_param->mutex);
+        #endif
         if(buf[recv_bytes-1] == '\n') {
             break;
         }
     }
     lseek(fd, 0, SEEK_SET);
     memset(transmit_buffer, '\0', BUF_LEN);
-    int read_bytes = read(fd, transmit_buffer, BUF_LEN);
-    if(read_bytes == -1) {
-        perror("read");
-        exit(EXIT_FAILURE);
+    ssize_t read_bytes;
+    while((read_bytes = read(fd, transmit_buffer, BUF_LEN)) > 0) {
+        printf("transmit_buffer: %s\n", transmit_buffer);
+        send(thread_func_param->newsockfd, transmit_buffer, read_bytes, 0);
     }
-    send(thread_func_param->newsockfd, transmit_buffer, read_bytes, 0);
     close(thread_func_param->newsockfd);
     close(fd);
     syslog(LOG_INFO, "Closed connection from %s\n", s);
-    thread_func_param->thread_complete_success = true;
+    thread_func_param->thread_complete_success = 1;
     return thread_func_param;
     //pthread_exit(NULL);
 }
@@ -114,6 +130,7 @@ void* thread_socket(void* thread_param) {
 /*This part of the code was referred from Suraj Ajjampur's github repository
 Credits to: https://github.com/cu-ecen-aeld/assignments-3-and-later-Suraj-Ajjampur/blob/master/server/aesdsocket.c*/
 
+#ifndef USE_AESD_CHAR_DEVICE
 void* thread_timestamp(void* thread_param) {
     timestamp_t *thread_func_param = (timestamp_t *)thread_param;
 
@@ -144,6 +161,7 @@ void* thread_timestamp(void* thread_param) {
     }
     pthread_exit(NULL);
 }
+#endif
 
 
 /************************************************************************************************
@@ -154,7 +172,9 @@ static void signal_handler(int signo) {
     syslog(LOG_INFO, "Caught Signal, exiting\n");
     close(sockfd);
     close(fd);
-    remove(pathname);
+    #ifndef USE_AESD_CHAR_DEVICE
+    remove(PATHNAME);
+    #endif
     closelog();
     while(!SLIST_FIRST(&head)) {
         datap = SLIST_FIRST(&head);
@@ -205,9 +225,11 @@ int main(int argc, char *argv[]) {
             close(STDERR_FILENO);
         }
     }
-    remove(pathname);
+    #ifndef USE_AESD_CHAR_DEVICE
+    remove(PATHNAME);
+    #endif
 
-    fd = open(pathname, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
+    fd = open(PATHNAME, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
     if(fd == -1) {
         perror("open");
         exit(EXIT_FAILURE);
@@ -277,9 +299,11 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    #ifndef USE_AESD_CHAR_DEVICE
     timestamp.interval_in_s = 10;
     timestamp.mutex = mutex;
     pthread_create(&timestamp.thread_id, NULL, thread_timestamp, &timestamp);
+    #endif
 
     if(listen(sockfd, BACKLOG) == -1) {
         perror("listen");
@@ -302,7 +326,7 @@ int main(int argc, char *argv[]) {
         }
         datap->thread_params.newsockfd = newsockfd;
         datap->thread_params.clientaddr = clientaddr;
-        datap->thread_params.thread_complete_success = false;
+        datap->thread_params.thread_complete_success = 0;
         datap->thread_params.mutex = mutex;
 
         pthread_create(&(datap->thread_params.thread_id), NULL, thread_socket, &datap->thread_params);
@@ -310,7 +334,7 @@ int main(int argc, char *argv[]) {
 
         /*Check if any thread has completed*/
         SLIST_FOREACH(datap, &head, entries) {
-            if(datap->thread_params.thread_complete_success == true) {
+            if(datap->thread_params.thread_complete_success == 1) {
                 int ret = pthread_join(datap->thread_params.thread_id, NULL);
                 if(ret != 0) {
                     perror("pthread_join");
@@ -322,8 +346,3 @@ int main(int argc, char *argv[]) {
         }
     }    
 }
-
-
-
-
-
