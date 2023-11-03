@@ -49,11 +49,13 @@ ssize_t aesd_read(struct file *filp, char __user *buf, size_t count, loff_t *f_p
     size_t* f_pos_offset = kmalloc(sizeof(size_t), GFP_KERNEL);
     struct aesd_buffer_entry* read_entry;
 
+    struct aesd_dev *char_dev = filp->private_data;
+
     /*Lock the buffer and find the entry to read*/
-    mutex_lock(&aesd_device.write_lock); 
+    mutex_lock(&char_dev->write_lock); 
 
     /*If the entry is found, read the entry and copy to user*/
-    if((read_entry = aesd_circular_buffer_find_entry_offset_for_fpos(aesd_device.command_buffer, (size_t)*f_pos, f_pos_offset)) != NULL) {
+    if((read_entry = aesd_circular_buffer_find_entry_offset_for_fpos(char_dev->command_buffer, (size_t)*f_pos, f_pos_offset)) != NULL) {
         ssize_t bytes_read = read_entry->size - *f_pos_offset;
         if(bytes_read > count)
             bytes_read = count;
@@ -63,7 +65,7 @@ ssize_t aesd_read(struct file *filp, char __user *buf, size_t count, loff_t *f_p
     }
 
     /*Unlock the buffer*/
-    mutex_unlock(&aesd_device.write_lock);
+    mutex_unlock(&char_dev->write_lock);
     return retval;
 }
 
@@ -71,6 +73,8 @@ ssize_t aesd_write(struct file *filp, const char __user *buf, size_t count, loff
     PDEBUG("write %zu bytes with offset %lld",count,*f_pos);
     ssize_t retval = -ENOMEM;
     static size_t final_count = 0;
+
+    struct aesd_dev *char_dev = filp->private_data;
 
     /*Temporary buffer to store the string from user*/
     char* temp_buffptr = kmalloc(count, GFP_KERNEL);
@@ -105,13 +109,13 @@ ssize_t aesd_write(struct file *filp, const char __user *buf, size_t count, loff
         memcpy(new_entry->buffptr, final_buffptr, final_count);
 
         /*Lock before writing*/
-        mutex_lock(&aesd_device.write_lock);
+        mutex_lock(&char_dev->write_lock);
 
         /*Write to the buffer*/
-        const char* overwritten_buffptr = aesd_circular_buffer_add_entry(aesd_device.command_buffer, new_entry);
+        const char* overwritten_buffptr = aesd_circular_buffer_add_entry(char_dev->command_buffer, new_entry);
 
         /*Unlock after writing*/
-        mutex_unlock(&aesd_device.write_lock);
+        mutex_unlock(&char_dev->write_lock);
 
         /*If overwritten, free the overwritten entry*/
         if(overwritten_buffptr != NULL) {
@@ -146,6 +150,7 @@ static int aesd_setup_cdev(struct aesd_dev *dev)
 
 int aesd_init_module(void)
 {
+    PDEBUG("Inside aesd_init_module");
     dev_t dev = 0;
     int result;
     result = alloc_chrdev_region(&dev, aesd_minor, 1, "aesdchar");
@@ -178,6 +183,7 @@ int aesd_init_module(void)
 
 void aesd_cleanup_module(void)
 {
+    PDEBUG("Cleaning up AESD char driver");
     dev_t devno = MKDEV(aesd_major, aesd_minor);
 
     cdev_del(&aesd_device.cdev);
