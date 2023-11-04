@@ -83,7 +83,7 @@ void* thread_socket(void* thread_param) {
 
     char buf[BUF_LEN];
     char transmit_buffer[BUF_LEN];
-    int fd = open(PATHNAME, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
+    fd = open(PATHNAME, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
     thread_data_t *thread_func_param = (thread_data_t *)thread_param;
     struct sockaddr_storage clientaddr = thread_func_param->clientaddr;
     char s[INET6_ADDRSTRLEN];
@@ -112,7 +112,6 @@ void* thread_socket(void* thread_param) {
     memset(transmit_buffer, '\0', BUF_LEN);
     ssize_t read_bytes;
     while((read_bytes = read(fd, transmit_buffer, BUF_LEN)) > 0) {
-        printf("transmit_buffer: %s\n", transmit_buffer);
         send(thread_func_param->newsockfd, transmit_buffer, read_bytes, 0);
     }
     close(thread_func_param->newsockfd);
@@ -228,12 +227,6 @@ int main(int argc, char *argv[]) {
     #ifndef USE_AESD_CHAR_DEVICE
     remove(PATHNAME);
     #endif
-
-    fd = open(PATHNAME, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
-    if(fd == -1) {
-        perror("open");
-        exit(EXIT_FAILURE);
-    }
 
     /*Register signal_handler as our signal handler for SIGINT*/
     if (signal (SIGINT, signal_handler) == SIG_ERR) {
