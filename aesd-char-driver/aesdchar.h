@@ -34,7 +34,8 @@ struct aesd_dev
     struct aesd_circular_buffer *command_buffer;
     char* final_buffptr;
     size_t final_count;
-    struct mutex write_lock;
+    size_t buffer_size;
+    struct mutex read_write_lock;
 
 };
 
