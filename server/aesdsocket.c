@@ -100,8 +100,6 @@ void* thread_socket(void* thread_param) {
     while(1) {
         recv_bytes = recv(thread_func_param->newsockfd, buf, BUF_LEN, 0);
         if(recv_bytes > 0) {
-            printf("recv_bytes: %zu\n", recv_bytes);
-            printf("recv buffer: %s", buf);
         }
            
         if(recv_bytes == -1) {
@@ -121,10 +119,8 @@ void* thread_socket(void* thread_param) {
         pthread_mutex_unlock(&thread_func_param->mutex);
         #endif
         if(memchr(buf, '\n', recv_bytes) != NULL) {
-            printf("Newline found\n");
             newline = true;
         }
-        printf("here\n");
         if(newline) {
             if(strncmp(buf, ioctl_string, strlen(ioctl_string))==0) {
                 ioctl_present = true;
@@ -135,27 +131,23 @@ void* thread_socket(void* thread_param) {
             }
 
             else {
-                printf("Not an ioctl\n");
                 fd = open(PATHNAME, O_RDWR | O_APPEND | O_CREAT, 0666);
                 write(fd, buf, recv_bytes);
                 close(fd);
             }
 
             if(!ioctl_present) {
-                printf("Reopening file\n");
                 fd = open(PATHNAME, O_RDONLY, 0666);
             }
             //lseek(fd, 0, SEEK_SET);
             memset(transmit_buffer, '\0', BUF_LEN);
             ssize_t read_bytes;
             while((read_bytes = read(fd, transmit_buffer, BUF_LEN)) > 0) {
-                printf("Read: %s\n", transmit_buffer);
                 send(thread_func_param->newsockfd, transmit_buffer, read_bytes, 0);
             }
         }
     }
     
-    printf("Read complete\n");
     close(thread_func_param->newsockfd);
     //close(fd);
     syslog(LOG_INFO, "Closed connection from %s\n", s);
