@@ -18,6 +18,8 @@
 #include <pthread.h>
 #include <sys/queue.h>
 #include <sys/time.h>
+#include <stdbool.h>
+#include "../aesd-char-driver/aesd_ioctl.h"
 
 #define PORT "9000"
 #define BACKLOG 10
@@ -83,40 +85,71 @@ void* thread_socket(void* thread_param) {
 
     char buf[BUF_LEN];
     char transmit_buffer[BUF_LEN];
-    int fd = open(PATHNAME, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
+    size_t recv_bytes;
     thread_data_t *thread_func_param = (thread_data_t *)thread_param;
     struct sockaddr_storage clientaddr = thread_func_param->clientaddr;
     char s[INET6_ADDRSTRLEN];
     inet_ntop(clientaddr.ss_family, get_in_addr((struct sockaddr *)&clientaddr), s, sizeof s);
     syslog(LOG_USER | LOG_INFO, "Accepted connection from %s\n", s);
 
+    bool newline = false;
+    bool ioctl_present = false;
+    char ioctl_string[] = "AESDCHAR_IOCSEEKTO";
+    memset(buf, '\0', BUF_LEN);
+
     while(1) {
-        memset(buf, '\0', BUF_LEN);
-        size_t recv_bytes = recv(thread_func_param->newsockfd, buf, BUF_LEN, 0);
+        recv_bytes = recv(thread_func_param->newsockfd, buf, BUF_LEN, 0);
+        if(recv_bytes > 0) {
+        }
+           
         if(recv_bytes == -1) {
             perror("recv");
             exit(EXIT_FAILURE);
         }
+
+        if(recv_bytes == 0) {
+            break;
+        }
+
         #ifndef USE_AESD_CHAR_DEVICE
         pthread_mutex_lock(&thread_func_param->mutex);
         #endif
-        write(fd, buf, recv_bytes);
+
         #ifndef USE_AESD_CHAR_DEVICE
         pthread_mutex_unlock(&thread_func_param->mutex);
         #endif
-        if(buf[recv_bytes-1] == '\n') {
-            break;
+        if(memchr(buf, '\n', recv_bytes) != NULL) {
+            newline = true;
+        }
+        if(newline) {
+            if(strncmp(buf, ioctl_string, strlen(ioctl_string))==0) {
+                ioctl_present = true;
+                struct aesd_seekto seekto;
+                sscanf(buf, "AESDCHAR_IOCSEEKTO:%d,%d", &seekto.write_cmd, &seekto.write_cmd_offset);
+                fd = open(PATHNAME, O_RDWR, 0666);
+                ioctl(fd, AESDCHAR_IOCSEEKTO, &seekto);
+            }
+
+            else {
+                fd = open(PATHNAME, O_RDWR | O_APPEND | O_CREAT, 0666);
+                write(fd, buf, recv_bytes);
+                close(fd);
+            }
+
+            if(!ioctl_present) {
+                fd = open(PATHNAME, O_RDONLY, 0666);
+            }
+            //lseek(fd, 0, SEEK_SET);
+            memset(transmit_buffer, '\0', BUF_LEN);
+            ssize_t read_bytes;
+            while((read_bytes = read(fd, transmit_buffer, BUF_LEN)) > 0) {
+                send(thread_func_param->newsockfd, transmit_buffer, read_bytes, 0);
+            }
         }
     }
-    lseek(fd, 0, SEEK_SET);
-    memset(transmit_buffer, '\0', BUF_LEN);
-    ssize_t read_bytes;
-    while((read_bytes = read(fd, transmit_buffer, BUF_LEN)) > 0) {
-        printf("transmit_buffer: %s\n", transmit_buffer);
-        send(thread_func_param->newsockfd, transmit_buffer, read_bytes, 0);
-    }
+    
     close(thread_func_param->newsockfd);
-    close(fd);
+    //close(fd);
     syslog(LOG_INFO, "Closed connection from %s\n", s);
     thread_func_param->thread_complete_success = 1;
     return thread_func_param;
@@ -228,12 +261,6 @@ int main(int argc, char *argv[]) {
     #ifndef USE_AESD_CHAR_DEVICE
     remove(PATHNAME);
     #endif
-
-    fd = open(PATHNAME, O_RDWR | O_CREAT | O_APPEND, S_IWUSR | S_IRUSR | S_IWGRP | S_IRGRP | S_IROTH);
-    if(fd == -1) {
-        perror("open");
-        exit(EXIT_FAILURE);
-    }
 
     /*Register signal_handler as our signal handler for SIGINT*/
     if (signal (SIGINT, signal_handler) == SIG_ERR) {
